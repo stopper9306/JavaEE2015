@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
+
 <body>
-Test Tomcat
+	<div class="container">
+		<form id="login-form" role="form" method="post">
+			<h1 class="text-center">Some title here</h1>
+			<div class="form-group">
+				<input type="text" class="form-control" name="username" id="username" placeholder="Username" value="">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" name="password" id="pwd" placeholder="Password" value="">
+			</div>
+	
+			<button type="button" class="btn btn-lg btn-primary btn-block">Log in</button>
+		</form>
+		<div id="register" class="text-center">
+			<a href="/register">Create account</a>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 </body>
 </html>
