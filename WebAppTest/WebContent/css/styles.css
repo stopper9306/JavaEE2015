@@ -4,15 +4,26 @@
 	margin-top: 150px;
 }
 
-.form-control {
-	height: 46px;
-}
-
 #register {
 	margin-top: 20px;
-	text-decoration: underline;
 }
 
 #register a {
 	text-decoration: underline;
+}
+
+.form-group input[type=date] {
+	width: 200px;
+}
+
+.form-group select {
+	width: 260px;
+}
+
+.form-group textarea {
+	height: 160px;
+}
+
+#create-task-form {
+	margin-top: 60px;
 }
