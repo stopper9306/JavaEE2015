@@ -30,7 +30,4 @@ public class WebApp extends HttpServlet{
 //		req.getParameter(arg0)
 		super.doPost(req, resp);
 	}
-	
-	
-	
 }
