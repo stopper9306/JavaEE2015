@@ -2,7 +2,8 @@ package models;
 
 public class User {
 	
-
+	private int id;
+	
 	private String userName;
 	 
 	 private String fullName;
@@ -13,14 +14,21 @@ public class User {
 	 
 	 private UserType type;
 	 
-	 public User(String userName, String fullName, String password, String email, UserType type) {
+	 public User(int id, String userName, String fullName, String password, String email, UserType type) {
 		super();
+		this.id = id;
 		this.userName = userName;
 		this.fullName = fullName;
 		this.password = password;
 		this.email = email;
 		this.type = type;
 	}
+	 
+	public int getId() {
+		return id;
+	}
+
+	 
 
 	public String getUserName() {
 		return userName;
@@ -61,5 +69,6 @@ public class User {
 	public void setType(UserType type) {
 		this.type = type;
 	}
+
 
 }
