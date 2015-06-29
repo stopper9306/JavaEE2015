@@ -42,8 +42,8 @@ public class UsersTableManager {
 	usersDao.update(user);
     }
 
-    public void getUser(User user) throws SQLException {
-	usersDao.queryForId(user.getUserName());
+    public User getUser(User user) throws SQLException {
+	return usersDao.queryForId(user.getUserName());
     }
 
     public static void main(String[] args) throws Exception {

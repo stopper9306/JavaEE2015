@@ -25,5 +25,27 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<button onclick="TestAjax()">TEST</button> 
+ <script>
+  function TestAjax() {
+      $.ajax({
+       url: 'test',
+       type: "POST",
+       contentType: "application/json;charset=UTF-8",
+       data: {username:"aaaa",password:"fgafa",fullname:"adada"},
+       statusCode: {
+            401: function() {
+             
+              },
+            200: function() {
+             alert("success");
+            }
+           }
+      });
+   
+   
+   
+  }
+  </script>
 </body>
 </html>
