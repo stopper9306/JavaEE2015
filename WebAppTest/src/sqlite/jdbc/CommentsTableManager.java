@@ -15,33 +15,33 @@ public class CommentsTableManager {
 
     ConnectionSource connectionSource;
 
-    Dao<Comment, String> usersDao;
+    Dao<Comment, String> commentsDao;
 
     private static String DATABASE_URL = "jdbc:sqlite:comments.db";
 
     public CommentsTableManager() throws SQLException {
-	String databaseUrl = DATABASE_URL;
-	connectionSource = new JdbcConnectionSource(databaseUrl);
-	usersDao = DaoManager.createDao(connectionSource, Comment.class);
+		String databaseUrl = DATABASE_URL;
+		connectionSource = new JdbcConnectionSource(databaseUrl);
+		commentsDao = DaoManager.createDao(connectionSource, Comment.class);
     }
 
     public void initTable() throws SQLException {
-	TableUtils.createTable(connectionSource, Comment.class);
+    	TableUtils.createTable(connectionSource, Comment.class);
     }
 
-    public void addUser(Comment user) throws SQLException {
-	usersDao.create(user);
+    public void addComment(Comment comment) throws SQLException {
+    	commentsDao.create(comment);
     }
 
-    public void removeUser(Comment user) throws SQLException {
-	usersDao.delete(user);
+    public void removeComment(Comment comment) throws SQLException {
+    	commentsDao.delete(comment);
     }
 
-    public void updateUser(Comment user) throws SQLException {
-	usersDao.update(user);
+    public void updateComment(Comment comment) throws SQLException {
+    	commentsDao.update(comment);
     }
 
-    public void getUser(Comment user) throws SQLException {
-	usersDao.queryForId(user.getContend());
+    public void getComment(Comment comment) throws SQLException {
+    	commentsDao.queryForId(comment.getContent());
     }
 }
