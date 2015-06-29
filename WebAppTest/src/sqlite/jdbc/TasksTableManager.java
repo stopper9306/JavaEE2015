@@ -15,33 +15,33 @@ public class TasksTableManager {
 
     ConnectionSource connectionSource;
 
-    Dao<Task, String> usersDao;
+    Dao<Task, String> tasksDao;
 
     private static String DATABASE_URL = "jdbc:sqlite:tasks.db";
 
     public TasksTableManager() throws SQLException {
-	String databaseUrl = DATABASE_URL;
-	connectionSource = new JdbcConnectionSource(databaseUrl);
-	usersDao = DaoManager.createDao(connectionSource, Task.class);
+		String databaseUrl = DATABASE_URL;
+		connectionSource = new JdbcConnectionSource(databaseUrl);
+		tasksDao = DaoManager.createDao(connectionSource, Task.class);
     }
 
     public void initTable() throws SQLException {
-	TableUtils.createTable(connectionSource, Task.class);
+    	TableUtils.createTable(connectionSource, Task.class);
     }
 
-    public void addTask(Task user) throws SQLException {
-	usersDao.create(user);
+    public void addTask(Task task) throws SQLException {
+    	tasksDao.create(task);
     }
 
-    public void removeTask(Task user) throws SQLException {
-	usersDao.delete(user);
+    public void removeTask(Task task) throws SQLException {
+    	tasksDao.delete(task);
     }
 
-    public void updateTask(Task user) throws SQLException {
-	usersDao.update(user);
+    public void updateTask(Task task) throws SQLException {
+    	tasksDao.update(task);
     }
 
-    public void getTask(Task user) throws SQLException {
-	usersDao.queryForId(user.getTitle());
+    public void getTask(Task task) throws SQLException {
+    	tasksDao.queryForId(task.getTitle());
     }
 }

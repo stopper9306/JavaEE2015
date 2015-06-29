@@ -7,78 +7,83 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "tasks")
 public class Task {
-    @DatabaseField
+   
+	@DatabaseField
     private int id;
+   
     @DatabaseField
     private String title;
+    
     @DatabaseField
     private String description;
+    
     @DatabaseField
     private Date dueDate;
+    
     @DatabaseField
     private String assignee;
+    
     @DatabaseField
     private Status status;
 
     public Task() {
-	// ORMLite needs a no-arg constructor
+    	// ORMLite needs a no-arg constructor
     }
 
     public Task(int id, String title, String description, Date dueDate, String assignee, Status status) {
-	this.id = id;
-	this.title = title;
-	this.description = description;
-	this.dueDate = dueDate;
-	this.assignee = assignee;
-	this.status = status;
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.dueDate = dueDate;
+		this.assignee = assignee;
+		this.status = status;
     }
 
     public String getTitle() {
-	return title;
+    	return title;
     }
 
     public void setTitle(String title) {
-	this.title = title;
+    	this.title = title;
     }
 
     public String getDescription() {
-	return description;
+    	return description;
     }
 
     public void setDescription(String description) {
-	this.description = description;
+    	this.description = description;
     }
 
     public Date getDueDate() {
-	return dueDate;
+    	return dueDate;
     }
 
     public void setDueDate(Date dueDate) {
-	this.dueDate = dueDate;
+    	this.dueDate = dueDate;
     }
 
     public String getAssignee() {
-	return assignee;
+    	return assignee;
     }
 
     public void setAssignee(String assignee) {
-	this.assignee = assignee;
+    	this.assignee = assignee;
     }
 
     public Status getStatus() {
-	return status;
+    	return status;
     }
 
     public void setStatus(Status status) {
-	this.status = status;
+    	this.status = status;
     }
 
     public int getId() {
-	return id;
+    	return id;
     }
 
     public void setId(int id) {
-	this.id = id;
+    	this.id = id;
     }
-
 }

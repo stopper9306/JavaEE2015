@@ -1,10 +1,13 @@
 package models;
 
+import java.util.List;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "users")
 public class User {
+	
     @DatabaseField(id = true)
     private String userName;
 
@@ -19,57 +22,63 @@ public class User {
 
     @DatabaseField
     private UserType type;
+    
+    @DatabaseField
+    private List<Task> tasks;
 
-    public User() {
+	public User() {
 	// ORMLite needs a no-arg constructor
     }
 
     public User(String userName, String fullName, String password, String email, UserType type) {
-	this.userName = userName;
-	this.fullName = fullName;
-	this.password = password;
-	this.email = email;
-	this.type = type;
+		this.userName = userName;
+		this.fullName = fullName;
+		this.password = password;
+		this.email = email;
+		this.type = type;
     }
 
     public String getUserName() {
-	return userName;
+    	return userName;
     }
 
     public void setUserName(String userName) {
-	this.userName = userName;
+    	this.userName = userName;
     }
 
     public String getFullName() {
-	return fullName;
+    	return fullName;
     }
 
     public void setFullName(String fullName) {
-	this.fullName = fullName;
+    	this.fullName = fullName;
     }
 
     public String getPassword() {
-	return password;
+    	return password;
     }
 
     public void setPassword(String password) {
-	this.password = password;
+    	this.password = password;
     }
 
     public String getEmail() {
-	return email;
+    	return email;
     }
 
     public void setEmail(String email) {
-	this.email = email;
+    	this.email = email;
     }
 
     public UserType getType() {
-	return type;
+    	return type;
     }
 
     public void setType(UserType type) {
-	this.type = type;
+    	this.type = type;
     }
-
+    
+    public List<Task> getTasks() {
+		return tasks;
+	}
 }
