@@ -1,57 +1,61 @@
 package models;
 
-import java.sql.Date;
+import java.util.Date;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "comments")
 public class Comment {
-	private
-		int id;
-		String text;
-		int userId;
-		int taskId;
-		Date taskDate;
-	
-	public
-		Comment(int _id, String _text,int _userId, int _taskId, Date _taskDate) {
-			this.id=_id;
-			this.text=_text;
-			this.userId=_userId;
-			this.taskId=_taskId;
-			this.taskDate=_taskDate;
-		}
+    @DatabaseField(id = true)
+    private String contend;
+    @DatabaseField
+    private int userId;
+    @DatabaseField
+    private int taskId;
+    @DatabaseField
+    private Date dateAdded;
 
-	public String getText() {
-		return text;
-	}
+    Comment() {
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    }
 
-	public int getUserId() {
-		return userId;
-	}
+    Comment(String contend, int userId, int taskId, Date dateAdded) {
+	this.contend = contend;
+	this.userId = userId;
+	this.taskId = taskId;
+	this.dateAdded = dateAdded;
+    }
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+    public String getContend() {
+	return contend;
+    }
 
-	public int getTaskId() {
-		return taskId;
-	}
+    public void setContend(String contend) {
+	this.contend = contend;
+    }
 
-	public void setTaskId(int taskId) {
-		this.taskId = taskId;
-	}
+    public int getUserId() {
+	return userId;
+    }
 
-	public Date getTaskDate() {
-		return taskDate;
-	}
+    public void setUserId(int userId) {
+	this.userId = userId;
+    }
 
-	public void setTaskDate(Date taskDate) {
-		this.taskDate = taskDate;
-	}
+    public int getTaskId() {
+	return taskId;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setTaskId(int taskId) {
+	this.taskId = taskId;
+    }
+
+    public Date getDateAdded() {
+	return dateAdded;
+    }
+
+    public void setDateAdded(Date dateAdded) {
+	this.dateAdded = dateAdded;
+    }
 }
