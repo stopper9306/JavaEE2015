@@ -8,6 +8,14 @@
     <servlet-name>Test</servlet-name>
     <url-pattern>/test</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Comments</servlet-name>
+    <servlet-class>services.CommentsManager</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Comments</servlet-name>
+    <url-pattern>/comment</url-pattern>
+  </servlet-mapping>
   <display-name>TaskManager</display-name>
   <resource-ref>
     <description>Reviews Database</description>
@@ -23,4 +31,16 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+    <resource-ref>
+    <res-ref-name>jdbc/sqlite/users</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+  </resource-ref>
+  <resource-ref>
+    <res-ref-name>jdbc/sqlite/tasks</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+  </resource-ref>
+  <resource-ref>
+    <res-ref-name>jdbc/sqlite/comments</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+  </resource-ref>
 </web-app>

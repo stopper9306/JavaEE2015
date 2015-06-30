@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context>  
-  <Resource name="jdbc/yourdb" 
-            auth="Container" 
-            type="javax.sql.DataSource" 
-            driverClassName="org.sqlite.JDBC"
-            url="jdbc:sqlite:/${catalina.home}/dbs/users.db"
-            factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory">
-  </Resource>
+<Context>
+    <Resource name="jdbc/sqlite/users"
+    	type="javax.sql.DataSource"
+   		driverClassName="org.sqlite.JDBC"
+    	url="jdbc:sqlite:/resources/db/users.db"
+    />
+    <Resource name="jdbc/sqlite/tasks"
+    	type="javax.sql.DataSource"
+    	driverClassName="org.sqlite.JDBC"
+    	url="jdbc:sqlite:/resources/db/tasks.db"
+    />
+    <Resource name="jdbc/sqlite/comments"
+    	type="javax.sql.DataSource"
+    	driverClassName="org.sqlite.JDBC"
+    	url="jdbc:sqlite:/resources/db/comments.db"
+    />
 </Context>

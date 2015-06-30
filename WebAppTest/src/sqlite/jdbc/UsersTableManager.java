@@ -21,32 +21,32 @@ public class UsersTableManager {
     private static String DATABASE_URL = "jdbc:sqlite:users.db";
 
     public UsersTableManager() throws SQLException {
-		String databaseUrl = DATABASE_URL;
-		connectionSource = new JdbcConnectionSource(databaseUrl);
-		usersDao = DaoManager.createDao(connectionSource, User.class);
+	String databaseUrl = DATABASE_URL;
+	connectionSource = new JdbcConnectionSource(databaseUrl);
+	usersDao = DaoManager.createDao(connectionSource, User.class);
     }
 
     public void initTable() throws SQLException {
-    	TableUtils.createTable(connectionSource, User.class);
+	TableUtils.createTable(connectionSource, User.class);
     }
 
     public void addUser(User user) throws SQLException {
-    	usersDao.create(user);
+	usersDao.create(user);
     }
 
     public void removeUser(User user) throws SQLException {
-    	usersDao.delete(user);
+	usersDao.delete(user);
     }
 
     public void updateUser(User user) throws SQLException {
-    	usersDao.update(user);
+	usersDao.update(user);
     }
 
-    public void getUser(User user) throws SQLException {
-    	usersDao.queryForId(user.getUserName());
+    public User getUser(User user) throws SQLException {
+	return usersDao.queryForId(user.getUserName());
     }
 
     public static void main(String[] args) throws Exception {
-    	DatabaseUtils.initTables();
+	DatabaseUtils.initTables();
     }
 }
