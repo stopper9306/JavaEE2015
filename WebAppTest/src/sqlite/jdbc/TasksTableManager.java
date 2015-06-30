@@ -9,6 +9,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import models.Task;
+import ormlite.utils.DatabaseUtils;
 
 public class TasksTableManager {
     TableUtils tableutils;
@@ -17,31 +18,28 @@ public class TasksTableManager {
 
     Dao<Task, String> tasksDao;
 
-    private static String DATABASE_URL = "jdbc:sqlite:tasks.db";
-
     public TasksTableManager() throws SQLException {
-		String databaseUrl = DATABASE_URL;
-		connectionSource = new JdbcConnectionSource(databaseUrl);
-		tasksDao = DaoManager.createDao(connectionSource, Task.class);
+	connectionSource = new JdbcConnectionSource(DatabaseUtils.DATABASE_URL);
+	tasksDao = DaoManager.createDao(connectionSource, Task.class);
     }
 
     public void initTable() throws SQLException {
-    	TableUtils.createTable(connectionSource, Task.class);
+	TableUtils.createTable(connectionSource, Task.class);
     }
 
     public void addTask(Task task) throws SQLException {
-    	tasksDao.create(task);
+	tasksDao.create(task);
     }
 
     public void removeTask(Task task) throws SQLException {
-    	tasksDao.delete(task);
+	tasksDao.delete(task);
     }
 
     public void updateTask(Task task) throws SQLException {
-    	tasksDao.update(task);
+	tasksDao.update(task);
     }
 
     public void getTask(Task task) throws SQLException {
-    	tasksDao.queryForId(task.getTitle());
+	tasksDao.queryForId(task.getTitle());
     }
 }

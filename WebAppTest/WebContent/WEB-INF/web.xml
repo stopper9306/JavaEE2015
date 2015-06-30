@@ -32,15 +32,7 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
     <resource-ref>
-    <res-ref-name>jdbc/sqlite/users</res-ref-name>
-    <res-type>javax.sql.DataSource</res-type>
-  </resource-ref>
-  <resource-ref>
-    <res-ref-name>jdbc/sqlite/tasks</res-ref-name>
-    <res-type>javax.sql.DataSource</res-type>
-  </resource-ref>
-  <resource-ref>
-    <res-ref-name>jdbc/sqlite/comments</res-ref-name>
+    <res-ref-name>jdbc/sqlite/taskmanager</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
   </resource-ref>
 </web-app>

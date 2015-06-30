@@ -5,10 +5,13 @@ import java.sql.SQLException;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import models.User;
+import models.UserType;
 import ormlite.utils.DatabaseUtils;
 
 public class UsersTableManager {
@@ -18,12 +21,18 @@ public class UsersTableManager {
 
     Dao<User, String> usersDao;
 
-    private static String DATABASE_URL = "jdbc:sqlite:users.db";
-
     public UsersTableManager() throws SQLException {
-	String databaseUrl = DATABASE_URL;
-	connectionSource = new JdbcConnectionSource(databaseUrl);
+	connectionSource = new JdbcConnectionSource(DatabaseUtils.DATABASE_URL);
 	usersDao = DaoManager.createDao(connectionSource, User.class);
+    }
+
+    public void createUpdateBulder() throws SQLException {
+	UpdateBuilder<User, String> updateBuilder = usersDao.updateBuilder();
+	// set the criteria like you would a QueryBuilder
+	updateBuilder.where().eq(User.USER_TYPE, UserType.REGULAR);
+	// update the value of your field(s)
+	updateBuilder.updateColumnValue(User.USER_TYPE, UserType.ADMIN);
+	updateBuilder.update();
     }
 
     public void initTable() throws SQLException {
@@ -36,6 +45,12 @@ public class UsersTableManager {
 
     public void removeUser(User user) throws SQLException {
 	usersDao.delete(user);
+    }
+
+    public void removeUserByUserName(String userName) throws SQLException {
+	DeleteBuilder<User, String> deleteBuilder = usersDao.deleteBuilder();
+	deleteBuilder.where().eq(User.USER_NAME, userName);
+	deleteBuilder.delete();
     }
 
     public void updateUser(User user) throws SQLException {
