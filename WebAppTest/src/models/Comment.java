@@ -13,29 +13,37 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "COMMENTS")
 public class Comment {
-	
-	public static final String ID = "ID";
 
-	public static final String CONTENT = "CONTENT";
-	
-	public static final String USER_ID = "USERID";
+    public static final String ID = "ID";
+
+    public static final String CONTENT = "CONTENT";
+
+    public static final String USER_ID = "USERID";
 
     public static final String TASK_ID = "TASKID";
 
     public static final String DATE = "DATE";
-    
-	@DatabaseField(columnName = ID, unique = true, generatedId = true, canBeNull = false)
+
+    @DatabaseField(columnName = ID, unique = true, generatedId = true, canBeNull = false)
     private int id;
-	
-	@DatabaseField(columnName = CONTENT, canBeNull = false)
+
+    public int getId() {
+	return id;
+    }
+
+    public void setId(int id) {
+	this.id = id;
+    }
+
+    @DatabaseField(columnName = CONTENT, canBeNull = false)
     private String content;
-    
+
     @DatabaseField(columnName = USER_ID, canBeNull = false)
     private int userId;
-    
+
     @DatabaseField(columnName = TASK_ID, canBeNull = false)
     private int taskId;
-    
+
     @DatabaseField(columnName = DATE, canBeNull = false)
     private Date date;
 
@@ -43,61 +51,61 @@ public class Comment {
     }
 
     Comment(String content, int userId, int taskId, Date date) {
-		this.content = content;
-		this.userId = userId;
-		this.taskId = taskId;
-		this.date = date;
+	this.content = content;
+	this.userId = userId;
+	this.taskId = taskId;
+	this.date = date;
     }
 
+    public Comment(JSONObject data) {
+	try {
+	    this.content = data.getString("content");
+	    this.userId = Integer.parseInt(data.getString("userId"));
+	    this.taskId = Integer.parseInt(data.getString("taskId"));
 
-	public Comment(JSONObject data) {
-    	try {
-			this.content = data.getString("content");
-			this.userId = Integer.parseInt(data.getString("userId"));
-			this.taskId = Integer.parseInt(data.getString("taskId"));
-
-			DateFormat format = new SimpleDateFormat();
-			this.date = format.parse(data.getString("date"));
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-
+	    DateFormat format = new SimpleDateFormat();
+	    this.date = format.parse(data.getString("date"));
+	} catch (JSONException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (ParseException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
 	}
+	;
 
-	public String getContent() {
-    	return content;
+    }
+
+    public String getContent() {
+	return content;
     }
 
     public void setContent(String contend) {
-    	this.content = contend;
+	this.content = contend;
     }
 
     public int getUserId() {
-    	return userId;
+	return userId;
     }
 
     public void setUserId(int userId) {
-    	this.userId = userId;
+	this.userId = userId;
     }
 
     public int getTaskId() {
-    	return taskId;
+	return taskId;
     }
 
     public void setTaskId(int taskId) {
-    	this.taskId = taskId;
+	this.taskId = taskId;
     }
 
     public Date getDate() {
-    	return date;
+	return date;
     }
-    
+
     public String toJSONString() {
-    	return "{content:" + this.content + ",userId:" + this.userId + ",date:" + this.date + "}";
+	return "{content:" + this.content + ",userId:" + this.userId + ",date:" + this.date + "}";
 
     }
 }
