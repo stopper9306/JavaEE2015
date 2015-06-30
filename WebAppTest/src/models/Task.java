@@ -5,25 +5,37 @@ import java.sql.Date;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "tasks")
+@DatabaseTable(tableName = "TASKS")
 public class Task {
+	
+	public static final String ID = "ID";
+	
+	public static final String TITLE = "TITLE";
+
+    public static final String DESCRIPTION = "DESCRIPTION";
+
+    public static final String DUE_DATE = "DUEDATE";
+
+    public static final String ASSIGNEE = "ASSIGNEE";
+
+    public static final String STATUS = "STATUS";
    
-	@DatabaseField
+	@DatabaseField(columnName = ID, unique = true, generatedId = true, canBeNull = false)
     private int id;
    
-    @DatabaseField
+    @DatabaseField(columnName = TITLE, canBeNull = false)
     private String title;
     
-    @DatabaseField
+    @DatabaseField(columnName = DESCRIPTION, canBeNull = false)
     private String description;
     
-    @DatabaseField
+    @DatabaseField(columnName = DUE_DATE, canBeNull = false)
     private Date dueDate;
     
-    @DatabaseField
+    @DatabaseField(columnName = ASSIGNEE, canBeNull = false)
     private String assignee;
     
-    @DatabaseField
+    @DatabaseField(columnName = STATUS, canBeNull = false)
     private Status status;
 
     public Task() {

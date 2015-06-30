@@ -11,19 +11,32 @@ import org.json.JSONObject;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "comments")
+@DatabaseTable(tableName = "COMMENTS")
 public class Comment {
+	
+	public static final String ID = "ID";
+
+	public static final String CONTENT = "CONTENT";
+	
+	public static final String USER_ID = "USERID";
+
+    public static final String TASK_ID = "TASKID";
+
+    public static final String DATE = "DATE";
     
-	@DatabaseField(id = true)
+	@DatabaseField(columnName = ID, unique = true, generatedId = true, canBeNull = false)
+    private int id;
+	
+	@DatabaseField(columnName = CONTENT, canBeNull = false)
     private String content;
     
-    @DatabaseField
+    @DatabaseField(columnName = USER_ID, canBeNull = false)
     private int userId;
     
-    @DatabaseField
+    @DatabaseField(columnName = TASK_ID, canBeNull = false)
     private int taskId;
     
-    @DatabaseField
+    @DatabaseField(columnName = DATE, canBeNull = false)
     private Date date;
 
     Comment() {

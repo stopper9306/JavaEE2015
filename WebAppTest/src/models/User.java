@@ -5,18 +5,18 @@ import java.util.List;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "users")
+@DatabaseTable(tableName = "USERS")
 public class User {
 
-    public static final String USER_NAME = "UserName";
+    public static final String USER_NAME = "USERNAME";
 
-    public static final String FULL_NAME = "FullName";
+    public static final String FULL_NAME = "FULLNAME";
 
-    public static final String PASSWORD = "Password";
+    public static final String PASSWORD = "PASSWORD";
 
-    public static final String EMAIL = "Email";
+    public static final String EMAIL = "EMAIL";
 
-    public static final String USER_TYPE = "UserType";
+    public static final String USER_TYPE = "USERTYPE";
 
     @DatabaseField(columnName = USER_NAME, unique = true, canBeNull = false)
     private String userName;
