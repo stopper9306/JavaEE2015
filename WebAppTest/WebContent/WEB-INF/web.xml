@@ -8,6 +8,14 @@
     <servlet-name>Test</servlet-name>
     <url-pattern>/test</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Comments</servlet-name>
+    <servlet-class>services.CommentsManager</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Comments</servlet-name>
+    <url-pattern>/comment</url-pattern>
+  </servlet-mapping>
   <display-name>TaskManager</display-name>
   <resource-ref>
     <description>Reviews Database</description>

@@ -23,7 +23,6 @@ public class User {
     @DatabaseField
     private UserType type;
     
-    @DatabaseField
     private List<Task> tasks;
 
 	public User() {

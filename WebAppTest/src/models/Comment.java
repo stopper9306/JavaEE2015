@@ -1,6 +1,12 @@
 package models;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -30,7 +36,26 @@ public class Comment {
 		this.date = date;
     }
 
-    public String getContent() {
+
+	public Comment(JSONObject data) {
+    	try {
+			this.content = data.getString("content");
+			this.userId = Integer.parseInt(data.getString("userId"));
+			this.taskId = Integer.parseInt(data.getString("taskId"));
+
+			DateFormat format = new SimpleDateFormat();
+			this.date = format.parse(data.getString("date"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+
+	}
+
+	public String getContent() {
     	return content;
     }
 
@@ -56,5 +81,10 @@ public class Comment {
 
     public Date getDate() {
     	return date;
+    }
+    
+    public String toJSONString() {
+    	return "{content:" + this.content + ",userId:" + this.userId + ",date:" + this.date + "}";
+
     }
 }
