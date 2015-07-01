@@ -90,4 +90,10 @@ public class User {
     public List<Task> getTasks() {
 	return tasks;
     }
+    
+    @Override
+    public String toString() {
+    	return String.format("username: %s, password: %s, fullName: %s, email: %s, type: %s",
+    			this.userName, this.password, this.fullName, this.email, this.type);
+    }
 }
