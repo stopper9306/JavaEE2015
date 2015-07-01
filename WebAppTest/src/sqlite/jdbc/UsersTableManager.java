@@ -1,6 +1,7 @@
 package sqlite.jdbc;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.j256.ormlite.dao.Dao;
@@ -60,17 +61,32 @@ public class UsersTableManager {
 
     public User getUser(User user) throws SQLException {
 	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
-	return queryBuilder.where().eq(User.USER_NAME, user.getUserName()).query().get(0);
+	List<User> usersList = new ArrayList<User>();
+	usersList = queryBuilder.where().eq(User.USER_NAME, user.getUserName()).query();
+	if (usersList.isEmpty()) {
+	    return null;
+	}
+	return usersList.get(0);
     }
 
     public User getUserByUserName(String userName) throws SQLException {
 	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
-	return queryBuilder.where().eq(User.USER_NAME, userName).query().get(0);
+	List<User> usersList = new ArrayList<User>();
+	usersList = queryBuilder.where().eq(User.USER_NAME, userName).query();
+	if (usersList.isEmpty()) {
+	    return null;
+	}
+	return usersList.get(0);
     }
 
     public User getUserByUserNameAndPassword(String userName, String password) throws SQLException {
 	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
-	return queryBuilder.where().eq(User.USER_NAME, userName).eq(User.PASSWORD, password).query().get(0);
+	List<User> usersList = new ArrayList<User>();
+	usersList = queryBuilder.where().eq(User.USER_NAME, userName).eq(User.PASSWORD, password).query();
+	if (usersList.isEmpty()) {
+	    return null;
+	}
+	return usersList.get(0);
     }
 
     public List<Task> getUserTasks(String userName) throws SQLException {
