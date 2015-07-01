@@ -11,21 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.User;
-import models.UserType;
 import services.UserContext;
 import sqlite.jdbc.UsersTableManager;
 
-
-@WebServlet("/register")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {	
 	private static final long serialVersionUID = 1L;
-       
-    private UsersTableManager usersTable;
-    private UserContext context;
+    
+	private UsersTableManager usersTable;
+	private UserContext context;
 	
-    public RegisterServlet() {
+    public LoginServlet() {
     	try {
-			usersTable = new UsersTableManager();
+    		usersTable = new UsersTableManager();
+    		context = new UserContext();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -36,21 +35,17 @@ public class RegisterServlet extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userName = request.getParameter("username");
         String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirm-password");
-        String fullName = request.getParameter("full-name");
-        String email = request.getParameter("email");
-        UserType userType = UserType.REGULAR;
-
+        
         try {
-        	User user = new User(userName, fullName, password, email, userType);
-			usersTable.addUser(user);
-			
-			//login
-			context.setCurrentUser(user);
+			User user = usersTable.getUserByUserNameAndPassword(userName, password);
+			if (user == null) {
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				response.sendRedirect("index.html");
+			}
+	    	context.setCurrentUser(user);
 			HttpSession session = request.getSession(false);
 	        session.setAttribute("name", user.getUserName());  
 			response.setStatus(HttpServletResponse.SC_OK);
@@ -58,6 +53,7 @@ public class RegisterServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+        
 	}
 
 }

@@ -82,7 +82,7 @@ public class UsersTableManager {
     public User getUserByUserNameAndPassword(String userName, String password) throws SQLException {
 	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
 	List<User> usersList = new ArrayList<User>();
-	usersList = queryBuilder.where().eq(User.USER_NAME, userName).eq(User.PASSWORD, password).query();
+	usersList = queryBuilder.where().eq(User.USER_NAME, userName).and().eq(User.PASSWORD, password).query();
 	if (usersList.isEmpty()) {
 	    return null;
 	}
