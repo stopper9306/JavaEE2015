@@ -56,7 +56,7 @@ public class CommentsTableManager {
 
     public List<Comment> getAllTaskComments(int taskId) throws SQLException {
 	QueryBuilder<Comment, String> queryBuilder = commentsDao.queryBuilder();
-	return queryBuilder.where().eq(Comment.TASK_ID, taskId).query();
+	return queryBuilder.orderBy(Comment.DATE, false).where().eq(Comment.TASK_ID, taskId).query();
     }
 
     public void pritntContent() throws SQLException {
