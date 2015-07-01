@@ -31,44 +31,84 @@
 
                
                 <!-- Posted Comments -->
-
+				<div id="comments">
                 <!-- Comment -->
-                <div class="media">
- 
-                    <div class="media-body">
-                        <h4 class="media-heading">User
-                            <small>Date</small>
-                        </h4>
-                        comment text ...... 
-                    </div>
-                </div>
-
-                <!-- Comment -->
-                <div class="media">
-
-                    <div class="media-body">
-                        <h4 class="media-heading">User
-                            <small>Date</small>
-                        </h4>
-                        Comment......
-
-                          
+                
+				</div>
+        
                       
                 <!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
                     <form role="form">
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" id="content"></textarea>
+                            <button class="btn btn-default" onClick="leaveComment(); return false;" >Leave comment</button>
                         </div>
                     </form>
-                </div>
-                      
-                    </div>
                 </div>
 
             </div>
 			</div>	
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script>
+		function leaveComment() {
+			 $.ajax({
+	              url: '/TaskManager/comment',
+	              type: 'POST',
+	              data: {"content" : $('#content').val(), "taskId":getParameterByName("id"),"action":"1"},
+	              cache: false,
+	              dataType: 'json',
+	              processData: false,
+	              contentType: "application/json",
+	              statusCode: {
+		        	    200: function(data) {
+		        	        console.log(data);
+		        	      },
+		        	   	403: function() {
+		        	   		alert("error with script");
+		        	   	}
+	         	}
+	              
+	         });
+			
+			
+			
+		}
+		
+		$(function() {
+			var id=getParameterByName("id");
+			$.ajax({
+	              url: '/TaskManager/comment',
+	              type: 'POST',
+	              data: JSON.stringify({"action" : "2", "taskId" : id}),
+	              contentType: "application/json",
+	              dataType: 'json',
+	              statusCode: {
+		        	    200: function(data) {
+		        	    	var commentsDiv=$('#comments');
+		        	    	for(var i = 0; i < data.length; i++) {
+		        	    	    var obj = data[i];
+		        	    	    var mainDiv=$('<div>').addClass('media');
+		        	    		var title=$('<h4>').addClass('media-heading').html(obj.userId);
+		        	    		var time=$('<small>').html(obj.date);
+		        	    		var content=$('<p>').html(obj.content);
+		        	    		
+		        	    		title.append(time);
+		        	    		
+		        	    		mainDiv.append(title);
+		        	    		mainDiv.append(content);
+		        	    		commentsDiv.append(mainDiv);
+		        	    	}
+		        	      },
+		        	   	403: function() {
+		        	   		alert("error with script");
+		        	   	}
+	         	}
+			});
+		});
+		
+	</script>
 </body>
 </html>
