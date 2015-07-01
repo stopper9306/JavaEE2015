@@ -63,9 +63,14 @@ public class UsersTableManager {
 	return queryBuilder.where().eq(User.USER_NAME, user.getUserName()).query().get(0);
     }
 
-    public User getUserByUserNamer(String userName) throws SQLException {
+    public User getUserByUserName(String userName) throws SQLException {
 	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
 	return queryBuilder.where().eq(User.USER_NAME, userName).query().get(0);
+    }
+
+    public User getUserByUserNameAndPassword(String userName, String password) throws SQLException {
+	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
+	return queryBuilder.where().eq(User.USER_NAME, userName).eq(User.PASSWORD, password).query().get(0);
     }
 
     public List<Task> getUserTasks(String userName) throws SQLException {
