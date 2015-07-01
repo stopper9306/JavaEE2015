@@ -78,7 +78,7 @@ public class CommentsManager extends HttpServlet{
 			switch (action) {
 			case 1: 
 				try {
-					addComment(data,resp);
+					addComment(data,resp,req);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -100,13 +100,22 @@ public class CommentsManager extends HttpServlet{
 			
 	}
 	
-	private void addComment(JSONObject data, HttpServletResponse resp) throws SQLException{
+	private void addComment(JSONObject data, HttpServletResponse resp, HttpServletRequest req) throws SQLException{
 		try {
 			
 			Comment comment=new Comment(data);
 			commentsTable.addComment(comment);
 			
-			resp.setStatus(200);	
+			
+			try {
+				resp.setStatus(200);
+				resp.getOutputStream().write(comment.toJSON().toString().getBytes());
+			    resp.getOutputStream().flush();
+			    resp.getOutputStream().close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

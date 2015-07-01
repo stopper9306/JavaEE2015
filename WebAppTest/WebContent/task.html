@@ -57,14 +57,15 @@
 			 $.ajax({
 	              url: '/TaskManager/comment',
 	              type: 'POST',
-	              data: {"content" : $('#content').val(), "taskId":getParameterByName("id"),"action":"1"},
+	              data: JSON.stringify({"content" : $('#content').val(), "taskId":getParameterByName("id"),"action":"1"}),
 	              cache: false,
 	              dataType: 'json',
 	              processData: false,
 	              contentType: "application/json",
 	              statusCode: {
 		        	    200: function(data) {
-		        	        console.log(data);
+		        	    	console.log(data);
+		        	    	showComment(data);
 		        	      },
 		        	   	403: function() {
 		        	   		alert("error with script");
@@ -87,19 +88,8 @@
 	              dataType: 'json',
 	              statusCode: {
 		        	    200: function(data) {
-		        	    	var commentsDiv=$('#comments');
 		        	    	for(var i = 0; i < data.length; i++) {
-		        	    	    var obj = data[i];
-		        	    	    var mainDiv=$('<div>').addClass('media');
-		        	    		var title=$('<h4>').addClass('media-heading').html(obj.userId);
-		        	    		var time=$('<small>').html(obj.date);
-		        	    		var content=$('<p>').html(obj.content);
-		        	    		
-		        	    		title.append(time);
-		        	    		
-		        	    		mainDiv.append(title);
-		        	    		mainDiv.append(content);
-		        	    		commentsDiv.append(mainDiv);
+		        	    		showComment(data[i]);
 		        	    	}
 		        	      },
 		        	   	403: function() {
@@ -108,6 +98,21 @@
 	         	}
 			});
 		});
+		
+		function showComment(obj) {
+			var commentsDiv=$('#comments');
+    	    var mainDiv=$('<div>').addClass('media');
+    		var title=$('<h4>').addClass('media-heading').html(obj.userId);
+    		var time=$('<small>').html(obj.date);
+    		var content=$('<p>').html(obj.content);
+    		
+    		title.append(time);
+    		
+    		mainDiv.append(title);
+    		mainDiv.append(content);
+    		commentsDiv.prepend(mainDiv);
+			
+		}
 		
 	</script>
 </body>
