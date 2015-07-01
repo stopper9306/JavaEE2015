@@ -1,5 +1,6 @@
 package models;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,19 +61,22 @@ public class Comment {
     public Comment(JSONObject data) {
 	try {
 	    this.content = data.getString("content");
-	    this.userId = Integer.parseInt(data.getString("userId"));
+	    this.userId = 1;
 	    this.taskId = Integer.parseInt(data.getString("taskId"));
-
-	    DateFormat format = new SimpleDateFormat();
-	    this.date = format.parse(data.getString("date"));
+	    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+	    Date now = new Date();
+	    String strDate = sdfDate.format(now);
+	    try {
+	    	long time=sdfDate.parse(strDate).getTime();
+	    	 this.date=new Timestamp(time);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	} catch (JSONException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
-	} catch (ParseException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
 	}
-	;
 
     }
 
@@ -104,8 +108,17 @@ public class Comment {
 	return date;
     }
 
-    public String toJSONString() {
-	return "{content:" + this.content + ",userId:" + this.userId + ",date:" + this.date + "}";
+    public JSONObject toJSON() {
+    	JSONObject result= new JSONObject();
+    	try {
+			result.put("content", this.content);
+	    	result.put("userId", this.userId);
+	    	result.put("date", this.date);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return result;
 
     }
 }

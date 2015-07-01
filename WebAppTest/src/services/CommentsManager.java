@@ -8,6 +8,7 @@ import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import models.Comment;
 import models.User;
@@ -77,7 +78,7 @@ public class CommentsManager extends HttpServlet{
 			switch (action) {
 			case 1: 
 				try {
-					addComment(data,resp);
+					addComment(data,resp,req);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -85,7 +86,7 @@ public class CommentsManager extends HttpServlet{
 				break;
 			case 2: 
 				int taskId= Integer.parseInt(data.getString("taskId"));
-				getComments(taskId); 
+				getComments(taskId,resp); 
 				break;
 			
 			
@@ -99,15 +100,47 @@ public class CommentsManager extends HttpServlet{
 			
 	}
 	
-	private void addComment(JSONObject data, HttpServletResponse resp) throws SQLException{
-		Comment comment=new Comment(data);
-		commentsTable.addComment(comment);
-		
-		resp.setStatus(200);		
+	private void addComment(JSONObject data, HttpServletResponse resp, HttpServletRequest req) throws SQLException{
+		try {
+			
+			Comment comment=new Comment(data);
+			commentsTable.addComment(comment);
+			
+			
+			try {
+				resp.setStatus(200);
+				resp.getOutputStream().write(comment.toJSON().toString().getBytes());
+			    resp.getOutputStream().flush();
+			    resp.getOutputStream().close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	
-	private void getComments(int taskId) {
-		
+	private void getComments(int taskId, HttpServletResponse resp) {
+		try {
+			List<Comment> comments=commentsTable.getAllTaskComments(taskId);
+			JSONArray list=new JSONArray();
+			for (int i = 0; i < comments.size(); i++) {
+				list.put(comments.get(i).toJSON());
+			}
+			resp.setStatus(200); 
+			resp.getOutputStream().write(list.toString().getBytes());
+		    resp.getOutputStream().flush();
+		    resp.getOutputStream().close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}
