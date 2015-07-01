@@ -5,85 +5,97 @@ import java.sql.Date;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "tasks")
+@DatabaseTable(tableName = "TASKS")
 public class Task {
-   
-	@DatabaseField
+
+    public static final String ID = "ID";
+
+    public static final String TITLE = "TITLE";
+
+    public static final String DESCRIPTION = "DESCRIPTION";
+
+    public static final String DUE_DATE = "DUEDATE";
+
+    public static final String ASSIGNEE = "ASSIGNEE";
+
+    public static final String STATUS = "STATUS";
+
+    @DatabaseField(columnName = ID, unique = true, generatedId = true, canBeNull = false)
     private int id;
-   
-    @DatabaseField
+
+    @DatabaseField(columnName = TITLE, canBeNull = false)
     private String title;
-    
-    @DatabaseField
+
+    @DatabaseField(columnName = DESCRIPTION, canBeNull = false)
     private String description;
-    
-    @DatabaseField
+
+    @DatabaseField(columnName = DUE_DATE, canBeNull = false)
     private Date dueDate;
-    
-    @DatabaseField
+
+    @DatabaseField(columnName = ASSIGNEE, canBeNull = false)
     private String assignee;
-    
-    @DatabaseField
+
+    @DatabaseField(columnName = STATUS, canBeNull = false)
     private Status status;
 
     public Task() {
-    	// ORMLite needs a no-arg constructor
+	// ORMLite needs a no-arg constructor
     }
 
     public Task(int id, String title, String description, Date dueDate, String assignee, Status status) {
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.dueDate = dueDate;
-		this.assignee = assignee;
-		this.status = status;
+	this.id = id;
+	this.title = title;
+	this.description = description;
+	this.dueDate = dueDate;
+	this.assignee = assignee;
+	this.status = status;
     }
 
     public String getTitle() {
-    	return title;
+	return title;
     }
 
     public void setTitle(String title) {
-    	this.title = title;
+	this.title = title;
     }
 
     public String getDescription() {
-    	return description;
+	return description;
     }
 
     public void setDescription(String description) {
-    	this.description = description;
+	this.description = description;
     }
 
     public Date getDueDate() {
-    	return dueDate;
+	return dueDate;
     }
 
     public void setDueDate(Date dueDate) {
-    	this.dueDate = dueDate;
+	this.dueDate = dueDate;
     }
 
     public String getAssignee() {
-    	return assignee;
+	return assignee;
     }
 
     public void setAssignee(String assignee) {
-    	this.assignee = assignee;
+	this.assignee = assignee;
     }
 
     public Status getStatus() {
-    	return status;
+	return status;
     }
 
     public void setStatus(Status status) {
-    	this.status = status;
+	this.status = status;
     }
 
     public int getId() {
-    	return id;
+	return id;
     }
 
     public void setId(int id) {
-    	this.id = id;
+	this.id = id;
     }
 }

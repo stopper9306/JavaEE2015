@@ -5,9 +5,22 @@
 	<title>Insert title here</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="css/styles.css" />
+	<link rel="stylesheet" type="text/css" href="css/header.css" />
 </head>
 
 <body>
+
+	<header class="header-fixed">
+		<div class="header-limiter">
+			<h1><a href="#">Company<span>logo</span></a></h1>
+			<nav>
+				<a href="#">Home</a>
+				<a href="#">Profile</a>
+				<a href="#">Logout</a>
+			</nav>
+		</div>
+	</header>
+
 	<div class="container">
 		<form id="login-form" role="form" method="post">
 			<h1 class="text-center">Some title here</h1>
@@ -25,10 +38,31 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-	<button onclick="TestAjax()">TEST</button> 
- <script>
-  function TestAjax() {
+	<script>
 
+		$(document).ready(function(){
+			var win = $(window),
+					body = $('body');
+		
+			// When we scroll more than 150px down, we set the
+				// "fixed" class on the body element.
+	
+			win.on('scroll', function(e){
+
+				if(win.scrollTop()) {
+					//body.addClass('fixed');
+				}
+				else {
+					//body.removeClass('fixed');
+				}
+			});
+		});
+	</script>
+
+    <button onclick="TestAjax()">TEST</button> 
+	<script>
+	 function TestAjax() {
+	
 	    var data = new FormData();
 	    data.append("username", "aaaa");
 	    data.append("fullname", "aaa2a");
@@ -47,11 +81,7 @@
 	                 alert("Success");
 	                }
 	         });
-      
-   
-   
-   
-  }
-  </script>
+	 }
+	 </script>
 </body>
 </html>
