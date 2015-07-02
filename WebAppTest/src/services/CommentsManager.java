@@ -56,7 +56,7 @@ public class CommentsManager extends HttpServlet{
 			HttpSession session = req.getSession(false);
 			if(session == null) {
 				resp.setStatus(HttpServletResponse.SC_FOUND);
-				resp.sendRedirect("index.html");
+				//resp.sendRedirect("index.html");
 			}
 		
 		  StringBuffer jb = new StringBuffer();
@@ -106,7 +106,7 @@ public class CommentsManager extends HttpServlet{
 
 		try {
 			HttpSession session = req.getSession(false);
-			data.put("userId", session.getAttribute("name"));
+			data.put("userName", session.getAttribute("name"));
 			Comment comment=new Comment(data);
 			commentsTable.addComment(comment);
 			

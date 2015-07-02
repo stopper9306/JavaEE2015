@@ -18,7 +18,7 @@ public class Comment {
 
     public static final String CONTENT = "CONTENT";
 
-    public static final String USER_ID = "USERID";
+    public static final String USER_NAME = "USERNAME";
 
     public static final String TASK_ID = "TASKID";
 
@@ -38,8 +38,8 @@ public class Comment {
     @DatabaseField(columnName = CONTENT, canBeNull = false)
     private String content;
 
-    @DatabaseField(columnName = USER_ID, canBeNull = false)
-    private String userId;
+    @DatabaseField(columnName = USER_NAME, canBeNull = false)
+    private String userName;
 
     @DatabaseField(columnName = TASK_ID, canBeNull = false)
     private int taskId;
@@ -52,7 +52,7 @@ public class Comment {
 
     Comment(String content, String userId, int taskId, Date date) {
 	this.content = content;
-	this.userId = userId;
+	this.userName = userName;
 	this.taskId = taskId;
 	this.date = date;
     }
@@ -60,7 +60,7 @@ public class Comment {
     public Comment(JSONObject data) {
 	try {
 	    this.content = data.getString("content");
-	    // this.userId = 1;
+	    this.userName = data.getString("userName");
 	    this.taskId = Integer.parseInt(data.getString("taskId"));
 	    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// dd/MM/yyyy
 	    Date now = new Date();
@@ -87,12 +87,12 @@ public class Comment {
 	this.content = contend;
     }
 
-    public String getUserId() {
-	return userId;
+    public String getUserName() {
+	return userName;
     }
 
-    public void setUserId(String userId) {
-	this.userId = userId;
+    public void setUserName(String userName) {
+	this.userName = userName;
     }
 
     public int getTaskId() {
@@ -111,7 +111,7 @@ public class Comment {
 	JSONObject result = new JSONObject();
 	try {
 	    result.put("content", this.content);
-	    result.put("userId", this.userId);
+	    result.put("userName", this.userName);
 	    result.put("date", this.date);
 	} catch (JSONException e) {
 	    // TODO Auto-generated catch block
