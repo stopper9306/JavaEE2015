@@ -58,6 +58,15 @@ public class CommentsManager extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+
+			HttpSession session = req.getSession(false);
+			if(session == null) {
+				resp.setStatus(HttpServletResponse.SC_FOUND);
+				resp.sendRedirect("index.html");
+				
+			}
+		
 		  StringBuffer jb = new StringBuffer();
 		  String line = null;
 		  JSONObject data = null;
