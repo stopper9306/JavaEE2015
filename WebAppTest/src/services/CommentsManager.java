@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.*;
 
@@ -101,8 +102,10 @@ public class CommentsManager extends HttpServlet{
 	}
 	
 	private void addComment(JSONObject data, HttpServletResponse resp, HttpServletRequest req) throws SQLException{
+
 		try {
-			
+			HttpSession session = req.getSession(false);
+			data.put("userId", session.getAttribute("name"));
 			Comment comment=new Comment(data);
 			commentsTable.addComment(comment);
 			
@@ -119,6 +122,9 @@ public class CommentsManager extends HttpServlet{
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}	
 	}
 	
@@ -129,6 +135,7 @@ public class CommentsManager extends HttpServlet{
 			for (int i = 0; i < comments.size(); i++) {
 				list.put(comments.get(i).toJSON());
 			}
+			
 			resp.setStatus(200); 
 			resp.getOutputStream().write(list.toString().getBytes());
 		    resp.getOutputStream().flush();

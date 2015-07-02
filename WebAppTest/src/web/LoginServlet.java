@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import models.User;
 import services.UserContext;
+import services.UserManager;
 import sqlite.jdbc.UsersTableManager;
 
 @WebServlet("/login")
@@ -41,15 +42,8 @@ public class LoginServlet extends HttpServlet {
         
         try {
 			User user = usersTable.getUserByUserNameAndPassword(userName, password);
-			if (user == null) {
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				response.sendRedirect("index.html");
-			}
-	    	context.setCurrentUser(user);
-			HttpSession session = request.getSession(false);
-	        session.setAttribute("name", user.getUserName());  
-			response.setStatus(HttpServletResponse.SC_OK);
-			response.sendRedirect("tasks.html");
+	    	UserManager userManager= new UserManager();
+			userManager.loginUser(user, response,request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

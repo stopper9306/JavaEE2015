@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import models.User;
 import models.UserType;
 import services.UserContext;
+import services.UserManager;
 import sqlite.jdbc.UsersTableManager;
 
 
@@ -48,13 +49,9 @@ public class RegisterServlet extends HttpServlet {
         try {
         	User user = new User(userName, fullName, password, email, userType);
 			usersTable.addUser(user);
-			
 			//login
-			context.setCurrentUser(user);
-			HttpSession session = request.getSession(false);
-	        session.setAttribute("name", user.getUserName());  
-			response.setStatus(HttpServletResponse.SC_OK);
-			response.sendRedirect("tasks.html");
+			UserManager userManager= new UserManager();
+			userManager.loginUser(user, response,request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
