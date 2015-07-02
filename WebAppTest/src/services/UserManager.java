@@ -102,6 +102,12 @@ public class UserManager extends HttpServlet{
 			case 2: 
 				getUser(data,resp,req); 
 				break;
+			case 3: 
+				getMyUser(resp,req); 
+				break;
+			case 4: 
+				UpdateUser(data,resp,req); 
+				break;
 			
 			}
 		} catch (NumberFormatException | JSONException e1) {
@@ -111,6 +117,46 @@ public class UserManager extends HttpServlet{
 		
 			
 	}
+	
+	private void getMyUser(HttpServletResponse resp, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		try {
+			User user=userTable.getUser(session.getAttribute("name").toString());
+			
+			resp.setStatus(200); 
+			resp.getOutputStream().write(user.toJSON().toString().getBytes());
+			resp.getOutputStream().flush();
+		    resp.getOutputStream().close();
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void UpdateUser(JSONObject data,HttpServletResponse resp, HttpServletRequest req) {
+		try {
+			if(!data.getString("password").equals(data.getString("repeated_password"))) {
+				resp.setStatus(403);
+				return;
+			
+			}
+			HttpSession session = req.getSession(false);
+			User user=userTable.getUser(session.getAttribute("name").toString());
+			if(!user.getPassword().equals(data.getString("old_password"))) {
+				resp.setStatus(410);
+				return;
+			}
+			user.setFullName(data.getString("name"));
+			user.setPassword(data.getString("password"));
+			userTable.updateUserFiled(user);
+			resp.setStatus(200);
+		} catch (JSONException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+	}
+	
 	
 	private void getUser(JSONObject data,HttpServletResponse resp, HttpServletRequest req) {
 		try {

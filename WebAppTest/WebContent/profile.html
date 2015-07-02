@@ -25,15 +25,31 @@
                   		  <tbody>
 		                      <tr>
 		                        <td>User Name:</td>
-		                        <td></td>
+		                        <td><input type="text" id="username" readonly></td>
 		                      </tr>
 		                      <tr>
 		                        <td>Full Name:</td>
-		                        <td></td>
+		                        <td><input type="text" id="name"></td>
 		                      </tr>
 		                      <tr>
 		                        <td>Email</td>
-		                        <td></td>
+		                        <td><input type="text" id="email" readonly></td>
+		                      </tr>
+		                      <tr>
+		                        <td>Old password</td>
+		                        <td><input type="password" id="old_password"></td>
+		                      </tr>
+		                      <tr>
+		                        <td>Password</td>
+		                        <td><input type="password" id="password"></td>
+		                      </tr>
+		                      <tr>
+		                        <td>Repeat password</td>
+		                        <td><input type="password" id="repeated_password"></td>
+		                      </tr>
+		                      <tr>
+		                      	<td></td>
+		                      	<td><button onClick="UpdateUser();return false;">Save</button></td>
 		                      </tr>
 		
 		                    </tbody>
@@ -45,5 +61,64 @@
         </div>
 	</div>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script>
+	$(function() {
+		var username=getParameterByName("username");
+		$.ajax({
+              url: '/TaskManager/user',
+              type: 'POST',
+              data: JSON.stringify({"action" : "3"}),
+              contentType: "application/json",
+              dataType: 'json',
+              statusCode: {
+	        	    200: function(data) {
+	        	    	$('#username').val(data.userName);
+	        	    	$('#name').val(data.fullName);
+	        	    	$('#email').val(data.email);
+	        	      },
+	        	   	403: function() {
+	        	   		alert("error with script");
+	        	   	}
+         	}
+		});
+	});
+	
+	
+	function UpdateUser() {
+		var password=$('#password').val();
+		var repeated_password=$('#repeated_password').val();
+		if(password == repeated_password) {
+			$.ajax({
+	            url: '/TaskManager/user',
+	            type: 'POST',
+	            data: JSON.stringify({"action" : "4","name":$('#name').val(),
+	            					"password":$('#password').val(),"old_password":$('#old_password').val(),
+	            					"repeated_password":$('#repeated_password').val()}),
+	            contentType: "application/json",
+	            dataType: 'json',
+	            statusCode: {
+		        	    200: function(data) {
+		        	    	alert("Success");
+		        	      },
+			        	   	403: function() {
+			        	   		alert("Password didn`t match");
+			        	   	},
+			        	   	410: function() {
+			        	   		alert("Wrong old password");
+			        	   	},
+		        	   500: function() {
+		        		   alert("There is a problem with server");
+		        	   }
+	       	}
+			});
+		}
+		else {
+			alert("Password didn`t match");
+		}
+		
+	}
+	
+	</script>
 </body>
 </html>
