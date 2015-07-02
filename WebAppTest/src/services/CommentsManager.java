@@ -46,14 +46,7 @@ public class CommentsManager extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		/*resp.setStatus(200);
-	    //Here we serialize the stream to a String.
-	    final String output = arr.toString();
-	    resp.setContentLength(output.length());
-	    //And write the string to output.
-	    resp.getOutputStream().write(output.getBytes());
-	    resp.getOutputStream().flush();
-	    resp.getOutputStream().close();*/
+		
 	}
 
 	@Override
@@ -64,7 +57,6 @@ public class CommentsManager extends HttpServlet{
 			if(session == null) {
 				resp.setStatus(HttpServletResponse.SC_FOUND);
 				resp.sendRedirect("index.html");
-				
 			}
 		
 		  StringBuffer jb = new StringBuffer();

@@ -5,6 +5,8 @@ import java.util.List;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import models.UserType;
+
 @DatabaseTable(tableName = "USERS")
 public class User {
 
