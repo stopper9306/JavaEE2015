@@ -16,6 +16,14 @@
     <servlet-name>Comments</servlet-name>
     <url-pattern>/comment</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Tasks</servlet-name>
+    <servlet-class>services.TaskManager</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Tasks</servlet-name>
+    <url-pattern>/task</url-pattern>
+  </servlet-mapping>
   <display-name>TaskManager</display-name>
   <resource-ref>
     <description>Reviews Database</description>

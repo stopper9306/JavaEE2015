@@ -24,7 +24,12 @@ public class TaskServlet extends HttpServlet {
 	private TasksTableManager tasksTable;
 
     public TaskServlet() {
-   
+    	try {
+			tasksTable = new TasksTableManager();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,22 +42,22 @@ public class TaskServlet extends HttpServlet {
         String description = request.getParameter("description");
         String strDate = request.getParameter("due-date");
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-        long time = 0;
+        Date dueDate= null;
+       
 		try {
-			time = sdfDate.parse(strDate).getTime();
+			long time = sdfDate.parse(strDate).getTime();
+			dueDate=new Timestamp(time);
+			
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-        Date dueDate=new Timestamp(time);
         String assignee = request.getParameter("assignee");
         Status status = Status.OPEN;
         
         Task task = new Task(title, description, dueDate, assignee, status);
         
-        try {
-        	System.out.println(task.toString());    
-        	tasksTable = new TasksTableManager();
+        try {   
 			tasksTable.addTask(task);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

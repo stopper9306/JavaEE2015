@@ -2,6 +2,9 @@ package models;
 
 import java.util.Date;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -95,8 +98,8 @@ public class Task {
 	return status;
     }
 
-    public void setStatus(Status status) {
-	this.status = status;
+    public void setStatus(String status) {
+	this.status = Status.valueOf(status);
     }
 
     public int getId() {
@@ -107,6 +110,24 @@ public class Task {
 	this.id = id;
     }
     
+    public JSONObject toJSON() {
+    	
+    	JSONObject result = new JSONObject();
+    	try {
+    	    result.put("id", this.id);
+    	    result.put("title", this.title);
+    	    result.put("description", this.description);
+    	    result.put("dueDate", this.dueDate);
+    	    result.put("assignee", this.assignee);
+    	    result.put("status", this.status);
+    	} catch (JSONException e) {
+    	    // TODO Auto-generated catch block
+    	    e.printStackTrace();
+    	}
+    	return result;
+    	
+    	
+    }
     @Override
     public String toString() {
     	return String.format("title: %s, description: %s, due date: %s, assignee: %s, status: %s",

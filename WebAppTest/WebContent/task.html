@@ -14,19 +14,19 @@
 			<a href="profile.html">Profile</a>
 		</div>
 		 <div class="col-lg-8">
-                <h1>Task Title</h1>
+                <h1 id="title">Task Title</h1>
                 <!-- Author -->
                 <p class="lead">
-                    Posted by <a href="#">author</a>
+                    <a href="#" id="author">author</a> <span id="select"></span>
                 </p>
-                <p class="lead">
+                <p class="lead" id="status">
                     Status: 
                 </p>
 
-                <p><span class="glyphicon glyphicon-time"></span>Due date: </p>
+                <p><span class="glyphicon glyphicon-time"></span>Due date: <span id="time"></span> </p>
 
                 <!-- Post Content -->
-                <p class="lead">Put Description of the task here!</p>
+                <p class="lead" id="desc">Put Description of the task here!</p>
                 
 
                
@@ -97,6 +97,43 @@
 		        	   	}
 	         	}
 			});
+			$.ajax({
+	              url: '/TaskManager/task',
+	              type: 'POST',
+	              data: JSON.stringify({"action" : "3", "taskId" : id}),
+	              contentType: "application/json",
+	              dataType: 'json',
+	              statusCode: {
+		        	    200: function(data) {
+		        	    	taskData=data.taskData;
+		        	    	$('#title').html(taskData.title);
+		        	    	$('#status').html(" Status: " + taskData.status);
+		        	    	$('#desc').html(taskData.description);
+		        	    	$('#time').html(taskData.dueDate);
+		        	    	if(!taskData.assignee) {
+		        	    		$('#author').html("Not assigned ");
+		        	    		var select=$('<select>').attr("onclick","ChangeAssignee(this)");
+		        	    		select.append($("<option></option>")
+		        	    		         .text("Assign to:"));
+		        	    		$.each(data.users, function(key, value) {   
+		        	    			select
+		        	    		         .append($("<option></option>")
+		        	    		         .attr("value",value.userName)
+		        	    		         .text(value.userName));
+		        	    		});
+		        	    		$('#select').append(select);
+		        	    	}
+		        	    	else {
+		        	    		$('#author').html("Assigned to "+taskData.assignee);
+		        	    	}
+		        	    	
+		        	    	
+		        	      },
+		        	   	403: function() {
+		        	   		alert("error with script");
+		        	   	}
+	         	}
+			});
 		});
 		
 		function showComment(obj) {
@@ -112,6 +149,25 @@
     		mainDiv.append(content);
     		commentsDiv.prepend(mainDiv);
 			
+		}
+		
+		function ChangeAssignee(select) {
+			var id=getParameterByName("id");
+			$.ajax({
+	              url: '/TaskManager/task',
+	              type: 'POST',
+	              data: JSON.stringify({"action" : "4", "taskId" : id,"assignee" : $(select).val()}),
+	              contentType: "application/json",
+	              dataType: 'json',
+	              statusCode: {
+		        	    200: function(data) {
+		        	    	//alert("Success assigned to " +  $(select).val());
+		        	      },
+		        	   	403: function() {
+		        	   		alert("error with script");
+		        	   	}
+	         	}
+			});
 		}
 		
 	</script>

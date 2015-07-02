@@ -1,6 +1,7 @@
 package sqlite.jdbc;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -10,6 +11,7 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import models.Comment;
 import models.Task;
 import ormlite.utils.DatabaseUtils;
 
@@ -59,6 +61,7 @@ public class TasksTableManager {
 	updateBuilder.update();
     }
 
+
     public void updateDueDate(Task task) throws SQLException {
 	UpdateBuilder<Task, String> updateBuilder = tasksDao.updateBuilder();
 	// set the criteria like you would a QueryBuilder
@@ -72,4 +75,14 @@ public class TasksTableManager {
 	QueryBuilder<Task, String> queryBuilder = tasksDao.queryBuilder();
 	return queryBuilder.where().eq(Task.ID, task.getId()).query().get(0);
     }
+    
+    public Task getTask(int taskId) throws SQLException {
+	QueryBuilder<Task, String> queryBuilder = tasksDao.queryBuilder();
+	return queryBuilder.where().eq(Task.ID, taskId).query().get(0);
+    }
+    public List<Task> getAllTasks(String username) throws SQLException {
+	QueryBuilder<Task, String> queryBuilder = tasksDao.queryBuilder();
+	return queryBuilder.orderBy(Task.DUE_DATE, false).where().eq(Task.ASSIGNEE, username).query();
+    }
+
 }

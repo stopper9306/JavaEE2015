@@ -15,6 +15,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import models.Task;
 import models.User;
+import models.UserType;
 import ormlite.utils.DatabaseUtils;
 
 public class UsersTableManager {
@@ -93,5 +94,10 @@ public class UsersTableManager {
 	Dao<Task, String> tasksDao = DaoManager.createDao(connectionSource, Task.class);
 	QueryBuilder<Task, String> queryBuilder = tasksDao.queryBuilder();
 	return queryBuilder.where().eq(Task.ASSIGNEE, userName).query();
+    }
+    public List<User> getUsers() throws SQLException {
+	Dao<User, String> usersDao = DaoManager.createDao(connectionSource, User.class);
+	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
+	return queryBuilder.where().eq(User.USER_TYPE, UserType.REGULAR).query();
     }
 }

@@ -21,25 +21,115 @@
 		        <th>Status</th>
 		    </tr>
 		    </thead>
-		    <tbody>
-		    	<tr>
-			    	<td><a href="#">1</a></td>
-			    	<td><a href="#">Task 1</a></td>
-			    	<td>Open</td>
-		    	</tr>
-		    	<tr>
-			    	<td><a href="#">2</a></td>
-			    	<td><a href="#">Task 2</a></td>
-			    	<td>Open</td>
-		    	</tr>
-		    	<tr>
-			    	<td><a href="#">3</a></td>
-			    	<td><a href="#">Task 3</a></td>
-			    	<td>In Progress</td>
-		    	</tr>
+		    <tbody id="tasks">
+		    
+
 		    </tbody>
 		</table>
 	</div>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script>
+	function leaveComment() {
+		 $.ajax({
+             url: '/TaskManager/comment',
+             type: 'POST',
+             data: JSON.stringify({"content" : $('#content').val(), "taskId":getParameterByName("id"),"action":"1"}),
+             cache: false,
+             dataType: 'json',
+             processData: false,
+             contentType: "application/json",
+             statusCode: {
+	        	    200: function(data) {
+	        	    	console.log(data);
+	        	    	showComment(data);
+	        	      },
+	        	   	403: function() {
+	        	   		alert("error with script");
+	        	   	}
+        	}
+             
+        });
+		
+		
+		
+	}
+	
+	$(function() {
+		$.ajax({
+             url: '/TaskManager/task',
+             type: 'POST',
+             data: JSON.stringify({"action" : "1"}),
+             contentType: "application/json",
+             dataType: 'json',
+             statusCode: {
+	        	    200: function(data) {
+	        	    	for(var i = 0; i < data.length; i++) {
+	        	    		showTask(data[i]);
+	        	    	}
+	        	      },
+	        	   	403: function() {
+	        	   		alert("error with script");
+	        	   	}
+        	}
+		});
+	});
+	
+	function showTask(obj) {
+		var commentsBody=$('#tasks');
+	    var maintr=$('<tr>');
+		
+	    var taskId=$('<td>');
+		var taskIda=$('<a>').attr("href","/TaskManager/task.html?id="+obj.id).html(obj.id);
+		taskId.append(taskIda);
+		
+		var taskName=$('<td>');
+		var taskNamea=$('<a>').attr("href","/TaskManager/task.html?id="+obj.id).html(obj.title);
+		taskName.append(taskNamea);
+		
+		var taskStatus=$('<td>');
+		var taskStatusSelect=$('<select>').attr("onclick","ChangeStatus('"+obj.id+"',this)");
+		taskStatusSelect.append($("<option></option>")
+		         .attr("value","OPEN")
+		         .text("OPEN"));
+		
+		taskStatusSelect.append($("<option></option>")
+		         .attr("value","IN_PROGRESS")
+		         .text("IN_PROGRESS"));
+		
+		taskStatusSelect.append($("<option></option>")
+		         .attr("value","CLOSED")
+		         .text("CLOSED"));
+		taskStatus.append(taskStatusSelect);
+		taskStatusSelect.find('option:contains('+obj.status+')').attr("selected",true);
+		console.log(obj.status);
+		console.log(taskStatus.val())
+		
+
+		maintr.append(taskId);
+		maintr.append(taskName);
+		maintr.append(taskStatus);
+		commentsBody.prepend(maintr);
+		
+	}
+	
+	function ChangeStatus(id,select) {
+		console.log(132435);
+		$.ajax({
+            url: '/TaskManager/task',
+            type: 'POST',
+            data: JSON.stringify({"taskId" : id,"status":$(select).val(),"action" : "2"}),
+            contentType: "application/json",
+            dataType: 'json',
+            statusCode: {
+	        	    200: function(data) {
+	        	    	
+	        	      },
+	        	   	403: function() {
+	        	   		alert("error with script");
+	        	   	}
+       	}
+		});
+	}
+	</script>
 </body>
 </html>
