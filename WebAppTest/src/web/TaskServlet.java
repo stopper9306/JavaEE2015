@@ -36,7 +36,7 @@ public class TaskServlet extends HttpServlet {
 		String title = request.getParameter("title");
         String description = request.getParameter("description");
         String strDate = request.getParameter("due-date");
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
         long time = 0;
 		try {
 			time = sdfDate.parse(strDate).getTime();

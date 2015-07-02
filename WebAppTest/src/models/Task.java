@@ -106,4 +106,11 @@ public class Task {
     public void setId(int id) {
 	this.id = id;
     }
+    
+    @Override
+    public String toString() {
+    	return String.format("title: %s, description: %s, due date: %s, assignee: %s, status: %s",
+    			this.title, this.description, this.dueDate, this.assignee, this.status);
+    }
+    
 }
