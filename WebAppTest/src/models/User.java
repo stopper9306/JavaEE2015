@@ -1,6 +1,10 @@
 package models;
 
+import java.util.Collection;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -98,4 +102,18 @@ public class User {
     	return String.format("username: %s, password: %s, fullName: %s, email: %s, type: %s",
     			this.userName, this.password, this.fullName, this.email, this.type);
     }
+
+	public JSONObject toJSON() {
+		JSONObject result = new JSONObject();
+    	try {
+    	    result.put("userName", this.userName);
+    	    result.put("fullName", this.fullName);
+    	    result.put("email", this.email);
+    	    result.put("type", this.type);
+    	} catch (JSONException e) {
+    	    // TODO Auto-generated catch block
+    	    e.printStackTrace();
+    	}
+    	return result;
+	}
 }

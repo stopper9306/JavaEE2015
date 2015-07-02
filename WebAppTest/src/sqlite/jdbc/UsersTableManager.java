@@ -100,4 +100,14 @@ public class UsersTableManager {
 	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
 	return queryBuilder.where().eq(User.USER_TYPE, UserType.REGULAR).query();
     }
+
+	public User getUser(String userName) throws SQLException {
+	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
+	List<User> usersList = new ArrayList<User>();
+	usersList = queryBuilder.where().eq(User.USER_NAME, userName).query();
+	if (usersList.isEmpty()) {
+	    return null;
+	}
+	return usersList.get(0);
+    }
 }

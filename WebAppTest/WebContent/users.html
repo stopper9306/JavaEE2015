@@ -21,12 +21,8 @@
 		        <th>Email</th>
 		    </tr>
 		    </thead>
-		    <tbody>
-		    	<tr>
-			    	<td><a href="#">Gosho</a></td>
-			    	<td><a href="#">gosho</a></td>
-			    	<td>gosho@gmail.com</td>
-		    	</tr>
+		    <tbody id="users">
+		    	
 		    	<tr>
 			    	<td><a href="#">Pesho</a></td>
 			    	<td><a href="#">pesho</a></td>
@@ -36,5 +32,49 @@
 		</table>
 	</div>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	
+	<script>
+	$(function() {
+		$.ajax({
+             url: '/TaskManager/user',
+             type: 'POST',
+             data: JSON.stringify({"action" : "1"}),
+             contentType: "application/json",
+             dataType: 'json',
+             statusCode: {
+	        	    200: function(data) {
+	        	    	for(var i = 0; i < data.length; i++) {
+	        	    		showUser(data[i]);
+	        	    	}
+	        	      },
+	        	   	403: function() {
+	        	   		alert("error with script");
+	        	   	}
+        	}
+		});
+	});
+	function showUser(obj) {
+		var usersBody=$('#users');
+	    var maintr=$('<tr>');
+		
+	    var userName=$('<td>');
+		var userNamea=$('<a>').attr("href","/TaskManager/user.html?username="+obj.userName).html(obj.fullName);
+		userName.append(userNamea);
+		
+		var userUsername=$('<td>');
+		var userUsernamea=$('<a>').attr("href","/TaskManager/user.html?username="+obj.userName).html(obj.userName);
+		userUsername.append(userUsernamea);
+		
+		var userEmail=$('<td>').html(obj.email);
+		
+		
+
+		maintr.append(userName);
+		maintr.append(userUsername);
+		maintr.append(userEmail);
+		usersBody.prepend(maintr);
+		
+	}
+	</script>
 </body>
 </html>

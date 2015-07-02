@@ -16,6 +16,14 @@
     <servlet-name>Comments</servlet-name>
     <url-pattern>/comment</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>Users</servlet-name>
+    <servlet-class>services.UserManager</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Users</servlet-name>
+    <url-pattern>/user</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>Tasks</servlet-name>
     <servlet-class>services.TaskManager</servlet-class>
