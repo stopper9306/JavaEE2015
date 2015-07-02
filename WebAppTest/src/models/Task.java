@@ -1,6 +1,6 @@
 package models;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -50,8 +50,16 @@ public class Task {
 	this.assignee = assignee;
 	this.status = status;
     }
+    
+    public Task(String title, String description, Date dueDate, String assignee, Status status) {
+	this.title = title;
+	this.description = description;
+	this.dueDate = dueDate;
+	this.assignee = assignee;
+	this.status = status;
+    }
 
-    public String getTitle() {
+	public String getTitle() {
 	return title;
     }
 
