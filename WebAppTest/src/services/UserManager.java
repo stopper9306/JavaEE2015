@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +56,7 @@ public class UserManager extends HttpServlet{
 				response.sendRedirect("index.html");
 			}
 	    	context.setCurrentUser(user);
-			HttpSession session = request.getSession();
+			HttpSession session = request.getSession(false);
 	        session.setAttribute("name", user.getUserName());  
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.sendRedirect("tasks.html");
@@ -136,7 +137,7 @@ public class UserManager extends HttpServlet{
 			}
 			HttpSession session = req.getSession(false);
 			User user=userTable.getUser(session.getAttribute("name").toString());
-			if(!user.getPassword().equals(data.getString("old_password"))) {
+			if(!user.getPassword().equals(DigestUtils.md5Hex(data.getString("old_password")))) {
 				resp.setStatus(410);
 				return;
 			}
@@ -147,7 +148,6 @@ public class UserManager extends HttpServlet{
 		} catch (JSONException | SQLException e) {
 			e.printStackTrace();
 		}
-				
 	}
 	
 	
@@ -187,7 +187,6 @@ public class UserManager extends HttpServlet{
 				list.put(users.get(i).toJSON());
 			}
 			
-			
 			resp.setStatus(200); 
 			resp.getOutputStream().write(list.toString().getBytes());
 		    resp.getOutputStream().flush();
@@ -198,8 +197,5 @@ public class UserManager extends HttpServlet{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
-	
 }
