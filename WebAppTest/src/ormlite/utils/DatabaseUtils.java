@@ -21,7 +21,7 @@ public class DatabaseUtils {
 
     public static void initTables() throws SQLException {
 	connectionSource = new JdbcConnectionSource(DATABASE_URL);
-
+	// TableUtils.d
 	TableUtils.createTable(connectionSource, Task.class);
 	TableUtils.createTable(connectionSource, User.class);
 	TableUtils.createTable(connectionSource, Comment.class);
@@ -45,5 +45,16 @@ public class DatabaseUtils {
 	// System.out.println(user2.getFullName());
 	// System.out.println(user2.getEmail());
 	// System.out.println(user2.getType());
+	// TasksTableManager manager = new TasksTableManager();
+	// Task task = new Task();
+	// task.setTitle("ASD");
+	// task.setAssignee("gosho");
+	// task.setStatus(Status.CLOSED);
+	// task.setDescription("sadsadsadsads");
+	// task.setDueDate(new Date(12, 12, 1999));
+	// manager.addTask(task);
+	// manager.addTask(task);
+	// manager.addTask(task);
+	// manager.addTask(task);
     }
 }
