@@ -63,13 +63,9 @@
 		var usersBody=$('#users');
 	    var maintr=$('<tr>');
 		
-	    var userName=$('<td>');
-		var userNamea=$('<a>').attr("href","/TaskManager/user.html?username="+obj.userName).html(obj.fullName);
-		userName.append(userNamea);
+	    var userName=$('<td>').html(obj.fullName);
 		
-		var userUsername=$('<td>');
-		var userUsernamea=$('<a>').attr("href","/TaskManager/user.html?username="+obj.userName).html(obj.userName);
-		userUsername.append(userUsernamea);
+		var userUsername=$('<td>').html(obj.userName);
 		
 		var userEmail=$('<td>').html(obj.email);
 		
@@ -82,6 +78,7 @@
 		
 	}
 	</script>
+	<script>
 			$(function () {
 			$.ajax({
 	            url: '/TaskManager/user',
@@ -102,5 +99,6 @@
 	       	}
 			});
 		});
+			</script>
 </body>
 </html>

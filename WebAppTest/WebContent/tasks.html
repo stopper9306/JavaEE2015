@@ -90,7 +90,10 @@
        	}
 		});
 	});
-
+	
+	$(document).ready(function() {
+		$( "#mine" ).click();
+	});
 	$( "#mine" ).click(function(){
 		$('#mine').off('clicked');
 		$.ajax({
@@ -112,7 +115,7 @@
         	}
 		});
 	});
-	
+
 	
 	$( "#all" ).click(function(){
 		$('#all').off('clicked');
