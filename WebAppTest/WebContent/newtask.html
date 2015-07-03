@@ -46,5 +46,27 @@
 		</form>
 	</div>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script> 
+	$(function () {
+		$.ajax({
+            url: '/TaskManager/user',
+            type: 'POST',
+            data: JSON.stringify({"action" : "5"}),
+            contentType: "application/json",
+            dataType: 'json',
+            statusCode: {
+	        	    200: function(data) {
+	        	    	console.log(data);
+	        	    	if (!data.username){
+	        	    		window.location = "/TaskManager/index.html";
+	        	    	}
+	        	      },
+	        	   	403: function() {
+	        	   		alert("error with script");
+	        	   	}
+       	}
+		});
+	});
+	</script>
 </body>
 </html>

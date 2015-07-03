@@ -52,7 +52,13 @@ public class UserManager extends HttpServlet {
     public void loginUser(User user, HttpServletResponse response, HttpServletRequest request) {
 	context.setCurrentUser(user);
 	HttpSession session = request.getSession();
-	session.setAttribute("name", user.getUserName());
+	String userName = null;
+	if (user == null) {
+	    userName = "";
+	} else {
+	    userName = user.getUserName();
+	}
+	session.setAttribute("name", userName);
 	response.setStatus(HttpServletResponse.SC_FOUND);
 	try {
 	    if (user == null) {
@@ -106,6 +112,9 @@ public class UserManager extends HttpServlet {
 	    case 4:
 		UpdateUser(data, resp, req);
 		break;
+	    case 5:
+		getSession(resp, req);
+		break;
 
 	    }
 	} catch (NumberFormatException | JSONException e1) {
@@ -116,7 +125,12 @@ public class UserManager extends HttpServlet {
     }
 
     private void getMyUser(HttpServletResponse resp, HttpServletRequest req) {
-	HttpSession session = req.getSession();
+	HttpSession session = req.getSession(false);
+	if (session == null) {
+	    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+	    return;
+	}
+
 	try {
 	    User user = userTable.getUser(session.getAttribute("name").toString());
 
@@ -125,6 +139,26 @@ public class UserManager extends HttpServlet {
 	    resp.getOutputStream().flush();
 	    resp.getOutputStream().close();
 	} catch (SQLException | IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    }
+
+    private void getSession(HttpServletResponse resp, HttpServletRequest req) {
+	HttpSession session = req.getSession(false);
+	String userNameString = "";
+	try {
+	    if (session != null) {
+		Object userName = session.getAttribute("name");
+		userNameString = userName.toString();
+	    }
+	    JSONObject result = new JSONObject();
+	    result.put("username", userNameString);
+	    resp.setStatus(200);
+	    resp.getOutputStream().write(result.toString().getBytes());
+	    resp.getOutputStream().flush();
+	    resp.getOutputStream().close();
+	} catch (IOException | JSONException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
