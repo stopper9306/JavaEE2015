@@ -5,14 +5,25 @@
 	<title>Insert title here</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="css/styles.css" />
+	<link rel="stylesheet" type="text/css" href="css/header.css" />
 </head>
 
 <body>
-	<div class="container">
-		<div class="text-right menu-links">
-			<a href="#">Home</a>
-			<a href="profile.html">Profile</a>
+
+	<header class="header-fixed">
+		<div class="header-limiter">
+			<h1><a href="#">Company<span>logo</span></a></h1>
+			<nav>
+				<a href="tasks.html">Home</a>
+				<a href="profile.html">Profile</a>
+				<a href="users.html">Users</a>
+				<a href="LogoutServlet">Logout</a> |
+			</nav>
 		</div>
+	</header>
+
+	<div class="container">
+		
 		<table id="users" class="table table-bordered table-hover">
 		    <thead>
 		    <tr class="list-group-item-info">
@@ -22,12 +33,7 @@
 		    </tr>
 		    </thead>
 		    <tbody id="users">
-		    	
-		    	<tr>
-			    	<td><a href="#">Pesho</a></td>
-			    	<td><a href="#">pesho</a></td>
-			    	<td>pesho.abv.bg</td>
-		    	</tr>
+		   
 		    </tbody>
 		</table>
 	</div>
