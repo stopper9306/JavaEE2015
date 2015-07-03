@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -35,10 +37,13 @@ public class UsersTableManager {
     }
 
     public void addUser(User user) throws SQLException {
+	user.setPassword(DigestUtils.md5Hex(user.getPassword()));
+	System.out.println(user.getPassword());
 	usersDao.create(user);
     }
 
     public void removeUser(User user) throws SQLException {
+	user.setPassword(DigestUtils.md5Hex(user.getPassword()));
 	usersDao.delete(user);
     }
 
@@ -53,6 +58,7 @@ public class UsersTableManager {
 	// set the criteria like you would a QueryBuilder
 	updateBuilder.where().eq(User.USER_NAME, user.getUserName());
 	// update the value of your field(s)
+	user.setPassword(DigestUtils.md5Hex(user.getPassword()));
 	updateBuilder.updateColumnValue(User.PASSWORD, user.getPassword());
 	updateBuilder.updateColumnValue(User.EMAIL, user.getEmail());
 	updateBuilder.updateColumnValue(User.FULL_NAME, user.getFullName());
@@ -83,6 +89,7 @@ public class UsersTableManager {
     public User getUserByUserNameAndPassword(String userName, String password) throws SQLException {
 	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
 	List<User> usersList = new ArrayList<User>();
+	password = DigestUtils.md5Hex(password);
 	usersList = queryBuilder.where().eq(User.USER_NAME, userName).and().eq(User.PASSWORD, password).query();
 	if (usersList.isEmpty()) {
 	    return null;
@@ -95,13 +102,14 @@ public class UsersTableManager {
 	QueryBuilder<Task, String> queryBuilder = tasksDao.queryBuilder();
 	return queryBuilder.where().eq(Task.ASSIGNEE, userName).query();
     }
+
     public List<User> getUsers() throws SQLException {
 	Dao<User, String> usersDao = DaoManager.createDao(connectionSource, User.class);
 	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
 	return queryBuilder.where().eq(User.USER_TYPE, UserType.REGULAR).query();
     }
 
-	public User getUser(String userName) throws SQLException {
+    public User getUser(String userName) throws SQLException {
 	QueryBuilder<User, String> queryBuilder = usersDao.queryBuilder();
 	List<User> usersList = new ArrayList<User>();
 	usersList = queryBuilder.where().eq(User.USER_NAME, userName).query();
