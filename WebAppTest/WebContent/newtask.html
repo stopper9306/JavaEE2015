@@ -20,7 +20,7 @@
 		</div>
 	</header>
 
-		<form id="create-task-form" class="col-lg-5" action="newtask" method="post" >
+	<form id="create-task-form" class="col-lg-5" action="newtask" method="post" >
 		<h1 class="text-center"> Create new task</h1>
 			<div class="form-group">
 				<label for="title">Title: </label>
@@ -38,13 +38,35 @@
 			
 			<div class="form-group">
 				<label for="assignee">Assignee: </label>
-				<input type="text" class="form-control input-lg" name="assignee" id="assignee" value="">
-					
++				<select class="form-control input-lg" name="assignee" id="assignee">
++				</select>
 			</div>
 	
-			<input type="submit" value="Create" class="btn btn-lg btn-primary btn-block" />
+			<input type="submit" value="Create" class="btn btn-lg btn-primary" />
 		</form>
 	</div>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$.ajax({
+	             url: '/TaskManager/user',
+	             type: 'POST',
+	             data: JSON.stringify({"action" : "1"}),
+	             contentType: "application/json",
+	             dataType: 'json',
+	             success: function(data) {
+	            	 $.each(data, function(key, value) {   
+	            		 $("#assignee")
+	     			         .append($("<option></option>")
+	     			         .attr("value",value.userName)
+	     			         .text(value.userName));
+	     			});
+	        	}
+			});
+		});
+		function getAllUsers() {
+			
+		}
+	</script>
 </body>
 </html>

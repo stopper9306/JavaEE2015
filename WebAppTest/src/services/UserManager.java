@@ -56,7 +56,7 @@ public class UserManager extends HttpServlet{
 				response.sendRedirect("index.html");
 			}
 	    	context.setCurrentUser(user);
-			HttpSession session = request.getSession(false);
+			HttpSession session = request.getSession();
 	        session.setAttribute("name", user.getUserName());  
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.sendRedirect("tasks.html");
