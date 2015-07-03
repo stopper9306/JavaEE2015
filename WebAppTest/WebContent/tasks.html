@@ -13,7 +13,9 @@
 			<a href="#">Home</a>
 			<a href="profile.html">Profile</a>
 		</div>
-		<table id="tasks" class="table table-bordered table-hover">
+		<button type="button" id="mine" class="btn btn-default" aria-label="Left Align">Mine</button>
+        <button type="button" id="all"  class="btn btn-default" aria-label="Center Align">All</button>
+		<table  class="table table-bordered table-hover">
 		    <thead>
 		    <tr class="list-group-item-info">
 		        <th>Task ID</th>
@@ -21,7 +23,7 @@
 		        <th>Status</th>
 		    </tr>
 		    </thead>
-		    <tbody id="tasks">
+		    <tbody id="tasks-body">
 		    
 
 		    </tbody>
@@ -53,8 +55,9 @@
 		
 		
 	}
-	
-	$(function() {
+
+	$( "#mine" ).click(function(){
+		$('#mine').off('clicked');
 		$.ajax({
              url: '/TaskManager/task',
              type: 'POST',
@@ -63,8 +66,9 @@
              dataType: 'json',
              statusCode: {
 	        	    200: function(data) {
+	        	    	$('#tasks-body').empty();
 	        	    	for(var i = 0; i < data.length; i++) {
-	        	    		showTask(data[i]);
+	        	    		showTask(data[i],true);
 	        	    	}
 	        	      },
 	        	   	403: function() {
@@ -74,8 +78,33 @@
 		});
 	});
 	
-	function showTask(obj) {
-		var commentsBody=$('#tasks');
+	
+	$( "#all" ).click(function(){
+		$('#all').off('clicked');
+			$.ajax({
+	             url: '/TaskManager/task',
+	             type: 'POST',
+	             data: JSON.stringify({"action" : "5"}),
+	             contentType: "application/json",
+	             dataType: 'json',
+	             statusCode: {
+		        	    200: function(data) {
+		        	    	$('#tasks-body').empty();
+		        	    	for(var i = 0; i < data.length; i++) {
+		        	    		showTask(data[i]);
+		        	    	}
+		        	      },
+		        	   	403: function() {
+		        	   		alert("error with script");
+		        	   	}
+	        	}
+			});
+		});
+	
+	
+	function showTask(obj, isAssigned) {
+	
+		var commentsBody=$('#tasks-body');
 	    var maintr=$('<tr>');
 		
 	    var taskId=$('<td>');
@@ -86,24 +115,31 @@
 		var taskNamea=$('<a>').attr("href","/TaskManager/task.html?id="+obj.id).html(obj.title);
 		taskName.append(taskNamea);
 		
-		var taskStatus=$('<td>');
-		var taskStatusSelect=$('<select>').attr("onclick","ChangeStatus('"+obj.id+"',this)");
-		taskStatusSelect.append($("<option></option>")
-		         .attr("value","OPEN")
-		         .text("OPEN"));
+		if(isAssigned==true){		
+			var taskStatus=$('<td>');
+			var taskStatusSelect=$('<select>').attr("onclick","ChangeStatus('"+obj.id+"',this)");
+			taskStatusSelect.append($("<option></option>")
+			         .attr("value","OPEN")
+			         .text("OPEN"));
+			
+			taskStatusSelect.append($("<option></option>")
+			         .attr("value","IN_PROGRESS")
+			         .text("IN_PROGRESS"));
+			
+			taskStatusSelect.append($("<option></option>")
+			         .attr("value","CLOSED")
+			         .text("CLOSED"));
+			taskStatus.append(taskStatusSelect);
+			taskStatusSelect.find('option:contains('+obj.status+')').attr("selected",true);
+			console.log(obj.status);
+			console.log(taskStatus.val())
+		}
 		
-		taskStatusSelect.append($("<option></option>")
-		         .attr("value","IN_PROGRESS")
-		         .text("IN_PROGRESS"));
-		
-		taskStatusSelect.append($("<option></option>")
-		         .attr("value","CLOSED")
-		         .text("CLOSED"));
-		taskStatus.append(taskStatusSelect);
-		taskStatusSelect.find('option:contains('+obj.status+')').attr("selected",true);
-		console.log(obj.status);
-		console.log(taskStatus.val())
-		
+		else{
+			var taskStatus=$('<td>');
+			var taskStatusa=$('<a>').attr("href","/TaskManager/task.html?id="+obj.id).html(obj.status);
+			taskStatus.append(taskStatusa);
+		}
 
 		maintr.append(taskId);
 		maintr.append(taskName);
@@ -130,6 +166,11 @@
        	}
 		});
 	}
+	
 	</script>
+
+
+	
+	
 </body>
 </html>

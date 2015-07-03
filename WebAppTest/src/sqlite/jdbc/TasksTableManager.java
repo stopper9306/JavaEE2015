@@ -83,11 +83,17 @@ public class TasksTableManager {
     
     public Task getTask(int taskId,String username) throws SQLException {
 	QueryBuilder<Task, String> queryBuilder = tasksDao.queryBuilder();
-	return queryBuilder.where().eq(Task.ID, taskId).eq(Task.ASSIGNEE, username).query().get(0);
+	return queryBuilder.where().eq(Task.ID, taskId).and().eq(Task.ASSIGNEE, username).query().get(0);
     }
+    
     public List<Task> getAllTasks(String username) throws SQLException {
 	QueryBuilder<Task, String> queryBuilder = tasksDao.queryBuilder();
 	return queryBuilder.orderBy(Task.DUE_DATE, false).where().eq(Task.ASSIGNEE, username).query();
     }
+    
+    public List<Task> getAllTasks() throws SQLException {
+    	QueryBuilder<Task, String> queryBuilder = tasksDao.queryBuilder();
+    	return queryBuilder.orderBy(Task.DUE_DATE, false).query();
+        }
 
 }

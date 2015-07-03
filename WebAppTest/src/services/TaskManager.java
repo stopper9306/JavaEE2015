@@ -17,7 +17,6 @@ import models.UserType;
 import sqlite.jdbc.CommentsTableManager;
 import sqlite.jdbc.TasksTableManager;
 import sqlite.jdbc.UsersTableManager;
-import sun.org.mozilla.javascript.internal.json.JsonParser.ParseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -108,6 +107,8 @@ public class TaskManager extends HttpServlet{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			case 5:
+				getAllTasks(resp,req);
 			
 		}
 			
@@ -164,10 +165,18 @@ public class TaskManager extends HttpServlet{
 	
 	private void changeStatus(JSONObject data, HttpServletResponse resp, HttpServletRequest req) throws SQLException{
 		HttpSession session = req.getSession(false);
+
+		Enumeration<String> test = session.getAttributeNames();
 		
+		while (test.hasMoreElements())
+		       System.out.println(test.nextElement());
 		try {
-			Task task=taskTable.getTask(Integer.parseInt(data.getString("taskId")),session.getAttribute("username").toString());
+			String selectValue = session.getAttribute("name").toString();
+			
+			System.out.println(selectValue);
+			Task task=taskTable.getTask(Integer.parseInt(data.getString("taskId")), session.getAttribute("name").toString());
 			task.setStatus(data.getString("status"));
+			
 			taskTable.updateStatus(task);
 			//taskTable.addComment(comment);
 			
@@ -187,6 +196,31 @@ public class TaskManager extends HttpServlet{
 		Object username=session.getAttribute("name");
 		try {
 			List<Task> tasks=taskTable.getAllTasks(username.toString());
+			JSONArray list=new JSONArray();
+			for (int i = 0; i < tasks.size(); i++) {
+				list.put(tasks.get(i).toJSON());
+			}
+			
+			resp.setStatus(200); 
+			resp.getOutputStream().write(list.toString().getBytes());
+		    resp.getOutputStream().flush();
+		    resp.getOutputStream().close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	private void getAllTasks(HttpServletResponse resp, HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		try {
+			List<Task> tasks=taskTable.getAllTasks();
 			JSONArray list=new JSONArray();
 			for (int i = 0; i < tasks.size(); i++) {
 				list.put(tasks.get(i).toJSON());
