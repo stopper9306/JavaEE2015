@@ -3,6 +3,6 @@
     <Resource name="jdbc/sqlite/taskmanager"
     	type="javax.sql.DataSource"
    		driverClassName="org.sqlite.JDBC"
-    	url="jdbc:sqlite:./resources/db/taskmanager.db"
+    	url="jdbc:sqlite:/resources/db/taskmanager.db"
     />
 </Context>

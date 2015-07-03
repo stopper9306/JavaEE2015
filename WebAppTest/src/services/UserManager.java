@@ -50,27 +50,19 @@ public class UserManager extends HttpServlet {
     }
 
     public void loginUser(User user, HttpServletResponse response, HttpServletRequest request) {
-	context.setCurrentUser(user);
-	HttpSession session = request.getSession();
-	String userName = null;
-	if (user == null) {
-	    userName = "";
-	} else {
-	    userName = user.getUserName();
-	}
-	session.setAttribute("name", userName);
-	response.setStatus(HttpServletResponse.SC_FOUND);
 	try {
 	    if (user == null) {
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		response.sendRedirect("index.html");
-	    } else {
-		response.sendRedirect("tasks.html");
 	    }
+	    context.setCurrentUser(user);
+	    HttpSession session = request.getSession(false);
+	    session.setAttribute("name", user.getUserName());
+	    response.setStatus(HttpServletResponse.SC_OK);
+	    response.sendRedirect("tasks.html");
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
