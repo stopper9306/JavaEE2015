@@ -109,6 +109,8 @@ public class TaskManager extends HttpServlet{
 				}
 			case 5:
 				getAllTasks(resp,req);
+			case 6:
+				checkOpenedInProgressTasks(resp, req);
 			
 		}
 			
@@ -242,5 +244,21 @@ public class TaskManager extends HttpServlet{
 		
 	}
 	
-	
+	private void checkOpenedInProgressTasks(HttpServletResponse resp, HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		try {
+			List<Task> tasks=userTable.getUserTasksOpenedAndInProgress(session.getAttribute("name").toString());
+			
+			if (tasks.size()<=1){
+			
+			resp.setStatus(200); 
+			}else{
+			resp.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

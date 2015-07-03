@@ -15,6 +15,7 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import models.Status;
 import models.Task;
 import models.User;
 import models.UserType;
@@ -101,6 +102,12 @@ public class UsersTableManager {
 	Dao<Task, String> tasksDao = DaoManager.createDao(connectionSource, Task.class);
 	QueryBuilder<Task, String> queryBuilder = tasksDao.queryBuilder();
 	return queryBuilder.where().eq(Task.ASSIGNEE, userName).query();
+    }
+    
+    public List<Task> getUserTasksOpenedAndInProgress(String userName) throws SQLException {
+    	Dao<Task, String> tasksDao = DaoManager.createDao(connectionSource, Task.class);
+    	QueryBuilder<Task, String> queryBuilder = tasksDao.queryBuilder();
+    	return queryBuilder.where().eq(Task.ASSIGNEE, userName).and().eq(Task.STATUS, Status.IN_PROGRESS).or().eq(Task.STATUS, Status.OPEN).query();
     }
 
     public List<User> getUsers() throws SQLException {
