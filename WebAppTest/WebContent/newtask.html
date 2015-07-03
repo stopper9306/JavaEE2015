@@ -5,15 +5,23 @@
 	<title>Insert title here</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="css/styles.css" />
+	<link rel="stylesheet" type="text/css" href="css/header.css" />
 </head>
 
 <body>
-	<div class="container">
-		<div class="text-right menu-links">
-			<a href="#">Home</a>
-			<a href="profile.html">Profile</a>
+	<header class="header-fixed">
+		<div class="header-limiter">
+			<h1><a href="#">Company<span>logo</span></a></h1>
+			<nav>
+				<a href="tasks.html">Home</a>
+				<a href="profile.html">Profile</a>
+				<a href="LogoutServlet">Logout</a> |
+			</nav>
 		</div>
+	</header>
+
 		<form id="create-task-form" class="col-lg-5" action="newtask" method="post" >
+		<h1 class="text-center"> Create new task</h1>
 			<div class="form-group">
 				<label for="title">Title: </label>
 				<input type="text" class="form-control input-lg" name="title" id="title" placeholder="Title" value="">

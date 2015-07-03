@@ -5,17 +5,28 @@
 	<title>Insert title here</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="css/styles.css" />
+	<link rel="stylesheet" type="text/css" href="css/header.css" />
 </head>
 
 <body>
-	<div class="container">
-		<div class="text-right menu-links">
-			<a href="#">Home</a>
-			<a href="profile.html">Profile</a>
+
+<header class="header-fixed">
+		<div class="header-limiter">
+			<h1><a href="#">Company<span>logo</span></a></h1>
+			<nav>
+				<a href="tasks.html">Home</a>
+				<a href="profile.html">Profile</a>
+				<a href="users.html">Users</a>
+				<a href="LogoutServlet">Logout</a> | 
+			</nav>
 		</div>
+	</header>
+
+	<div class="container">
+
 		<button type="button" id="mine" class="btn btn-default" aria-label="Left Align">Mine</button>
         <button type="button" id="all"  class="btn btn-default" aria-label="Center Align">All</button>
-		<table  class="table table-bordered table-hover">
+		<table  class="task-table table table-bordered table-hover">
 		    <thead>
 		    <tr class="list-group-item-info">
 		        <th>Task ID</th>
@@ -28,6 +39,9 @@
 
 		    </tbody>
 		</table>
+		<form action="newtask.html">
+   		 <input type="submit" value="Create new task">
+</form>
 	</div>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 	<script>

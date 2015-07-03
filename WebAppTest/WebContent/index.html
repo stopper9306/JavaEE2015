@@ -59,29 +59,5 @@
 		});
 	</script>
 
-    <button onclick="TestAjax()">TEST</button> 
-	<script>
-	 function TestAjax() {
-	
-	    var data = new FormData();
-	    data.append("username", "aaaa");
-	    data.append("fullname", "aaa2a");
-	    // append other form fields to formData
-	         $.ajax({
-	              url: '/TaskManager/comment',
-	              type: 'POST',
-	              data: {"username" : "aaa", "fullname":"aaaaa2"},
-	              cache: false,
-	              dataType: 'json',
-	              processData: false,
-	              contentType: "application/x-www-form-urlencoded",
-	         }).done(function(data,jqXHR){
-	                if(jqXHR.status == 200){
-	                 // handle your success flow
-	                 alert("Success");
-	                }
-	         });
-	 }
-	 </script>
 </body>
 </html>
