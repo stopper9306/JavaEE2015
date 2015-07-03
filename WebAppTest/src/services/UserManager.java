@@ -78,9 +78,11 @@ public class UserManager extends HttpServlet{
 		    BufferedReader reader = req.getReader();
 		    while ((line = reader.readLine()) != null)
 		      jb.append(line);
-		  } catch (Exception e) { /*report an error*/ }
+		} catch (Exception e) {
+		    /* report an error */ 
+		}
 
-		  try {
+		try {
 			  data = new JSONObject(jb.toString());
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -89,32 +91,35 @@ public class UserManager extends HttpServlet{
 		try {
 			int action = Integer.parseInt(data.getString("action"));
 			switch (action) {
-			case 1: 
-				getUsers(resp,req); 
-				break;
-			
-			
-			case 2: 
-				getUser(data,resp,req); 
-				break;
-			case 3: 
-				getMyUser(resp,req); 
-				break;
-			case 4: 
-				UpdateUser(data,resp,req); 
-				break;
-			
+					case 1: 
+						getUsers(resp,req); 
+						break;
+					case 2: 
+						getUser(data,resp,req); 
+						break;
+					case 3: 
+						getMyUser(resp,req); 
+						break;
+					case 4: 
+						UpdateUser(data,resp,req); 
+						break;
+				    case 5:
+						getSession(resp, req);
+						break;
 			}
-		} catch (NumberFormatException | JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		
-			
 	}
-	
-	private void getMyUser(HttpServletResponse resp, HttpServletRequest req) {
-		HttpSession session = req.getSession();
+		
+    private void getMyUser(HttpServletResponse resp, HttpServletRequest req) {
+	HttpSession session = req.getSession(false);
+	if (session == null) {
+	    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+	    return;
+	}
 		try {
 			User user=userTable.getUser(session.getAttribute("name").toString());
 			
@@ -127,6 +132,26 @@ public class UserManager extends HttpServlet{
 			e.printStackTrace();
 		}
 	}
+
+    private void getSession(HttpServletResponse resp, HttpServletRequest req) {
+	HttpSession session = req.getSession(false);
+	String userNameString = "";
+	try {
+	    if (session != null) {
+		Object userName = session.getAttribute("name");
+		userNameString = userName.toString();
+	    }
+	    JSONObject result = new JSONObject();
+	    result.put("username", userNameString);
+	    resp.setStatus(200);
+	    resp.getOutputStream().write(result.toString().getBytes());
+	    resp.getOutputStream().flush();
+	    resp.getOutputStream().close();
+	} catch (IOException | JSONException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    }
 
 	private void UpdateUser(JSONObject data,HttpServletResponse resp, HttpServletRequest req) {
 		try {

@@ -38,8 +38,7 @@
 			
 			<div class="form-group">
 				<label for="assignee">Assignee: </label>
-+				<select class="form-control input-lg" name="assignee" id="assignee">
-+				</select>
++				<select class="form-control input-lg" name="assignee" id="assignee"></select>
 			</div>
 	
 			<input type="submit" value="Create" class="btn btn-lg btn-primary" />
@@ -48,6 +47,11 @@
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			getAllUsers();
+			redirectIfNotLogged();
+		});
+		
+		function getAllUsers() {
 			$.ajax({
 	             url: '/TaskManager/user',
 	             type: 'POST',
@@ -63,9 +67,26 @@
 	     			});
 	        	}
 			});
-		});
-		function getAllUsers() {
-			
+		}
+		
+		function redirectIfNotLogged() {
+			$.ajax({
+            url: '/TaskManager/user',
+            type: 'POST',
+            data: JSON.stringify({"action" : "5"}),
+            contentType: "application/json",
+            dataType: 'json',
+            statusCode: {
+	        	    200: function(data) {
+	        	    	if (!data.username){
+	        	    		window.location = "/TaskManager/index.html";
+	        	    	}
+	        	      },
+	        	   	403: function() {
+	        	   		alert("error with script");
+	        	   	}
+       			}
+			});
 		}
 	</script>
 </body>
