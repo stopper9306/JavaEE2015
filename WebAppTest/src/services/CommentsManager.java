@@ -15,7 +15,6 @@ import models.User;
 import models.UserType;
 import sqlite.jdbc.CommentsTableManager;
 import sqlite.jdbc.UsersTableManager;
-import sun.org.mozilla.javascript.internal.json.JsonParser.ParseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
