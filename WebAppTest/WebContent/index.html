@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Task Manager</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="css/styles.css" />
 	<link rel="stylesheet" type="text/css" href="css/header.css" />
@@ -12,7 +12,7 @@
 
 	<header class="header-fixed">
 		<div class="header-limiter">
-			<h1><a href="#">Company<span>logo</span></a></h1>
+			<h1><a href="#">Task<span>Manager</span></a></h1>
 			<nav>
 				<a href="#">Home</a>
 				<a href="#">Profile</a>
@@ -23,7 +23,6 @@
 
 	<div class="container">
 		<form id="login-form" action="login" method="post">
-			<h1 class="text-center">Some title here</h1>
 			<div class="form-group">
 				<input type="text" class="form-control input-lg" name="username" id="username" placeholder="Username" value="">
 			</div>
@@ -38,26 +37,6 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-	<script>
-
-		$(document).ready(function(){
-			var win = $(window),
-					body = $('body');
-		
-			// When we scroll more than 150px down, we set the
-				// "fixed" class on the body element.
-	
-			win.on('scroll', function(e){
-
-				if(win.scrollTop()) {
-					//body.addClass('fixed');
-				}
-				else {
-					//body.removeClass('fixed');
-				}
-			});
-		});
-	</script>
 	<script>
 	$(function () {
 		$.ajax({
@@ -75,11 +54,10 @@
 	        	      },
 	        	   	403: function() {
 	        	   		alert("error with script");
-	        	   	}
-       	}
+	        		}
+       		}
 		});
 	});
 	</script>
-
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Task Manager</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="css/styles.css" />
 	<link rel="stylesheet" type="text/css" href="css/header.css" />
@@ -11,7 +11,7 @@
 <body>
 	<header class="header-fixed">
 		<div class="header-limiter">
-			<h1><a href="#">Company<span>logo</span></a></h1>
+			<h1><a href="#">Task<span>Manager</span></a></h1>
 			<nav>
 				<a href="tasks.html">Home</a>
 				<a href="profile.html">Profile</a>
@@ -19,7 +19,8 @@
 			</nav>
 		</div>
 	</header>
-
+	
+	<div class="container">
 	<form id="create-task-form" class="col-lg-5" action="newtask" method="post" >
 		<h1 class="text-center"> Create new task</h1>
 			<div class="form-group">
@@ -41,7 +42,7 @@
 +				<select class="form-control input-lg" name="assignee" id="assignee">
 					<option value="">not assigned</option>
 				</select>
-
+				<p id="tasks-warning" class="hidden red">This user already has enough tasks.</p>
 			</div>
 	
 			<input type="submit" value="Create" class="btn btn-lg btn-primary" />
@@ -52,6 +53,29 @@
 		$(function() {
 			getAllUsers();
 			redirectIfNotLogged();
+			
+			$("#assignee").change(function() {
+				$.ajax({
+		            url: '/TaskManager/user',
+		            type: 'POST',
+		            data: JSON.stringify({"action" : "6", "userName" : $("#assignee").val()}),
+		            contentType: "application/json",
+		            dataType: 'json',
+		            success: function(data) {
+		            	var numberOfTasks = parseInt(data.size);
+		            	numberOfTasks < 2 ? 
+		            			$("#tasks-warning").addClass("hidden") :
+		            			$("#tasks-warning").removeClass("hidden");
+					}
+				});
+			})
+			
+			$("#create-task-form").submit(function(e) {
+				//don't submit the form if assignee has 2 or more tasks
+				if (!$("#tasks-warning").hasClass("hidden")) {
+					e.preventDefault();
+				}
+			});
 		});
 		
 		function getAllUsers() {

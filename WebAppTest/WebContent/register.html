@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Task Manager</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="css/styles.css" />
 	<link rel="stylesheet" type="text/css" href="css/header.css" />
@@ -13,7 +13,7 @@
 
 	<header class="header-fixed">
 		<div class="header-limiter">
-			<h1><a href="#">Company<span>logo</span></a></h1>
+			<h1><a href="#">Task<span>Manager</span></a></h1>
 			<nav>
 				<a href="tasks.html">Home</a>
 				<a href="profile.html">Profile</a>
@@ -52,22 +52,19 @@
 	<script>
 	function validateUserName()
 	{
-	var name = document.getElementById("username").value;
-
-	if(name.length == 0)
-
-	{
-	producePrompt("Username Required", "usernameprompt", "red");
-	return false;
-
-	}
+		var name = document.getElementById("username").value;
+	
+		if(name.length == 0)
+		{
+			producePrompt("Username Required", "usernameprompt", "red");
+			return false;
+		}
 	}
 	
 	function producePrompt(message, promptlocation, color)
 	{
-	document.getElementById(promptLocation).innerHTML = message;
-	document.getElementById(promptLocation).style.color = color;
-
+		document.getElementById(promptLocation).innerHTML = message;
+		document.getElementById(promptLocation).style.color = color;
 	}
 	</script>
 	<script> 
@@ -88,10 +85,9 @@
 	        	   	403: function() {
 	        	   		alert("error with script");
 	        	   	}
-       	}
+       		}
 		});
 	});
 	</script>
-	
 </body>
 </html>

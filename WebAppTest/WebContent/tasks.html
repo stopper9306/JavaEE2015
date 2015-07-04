@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Task Manger</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="css/styles.css" />
 	<link rel="stylesheet" type="text/css" href="css/header.css" />
@@ -12,7 +12,7 @@
 
 <header class="header-fixed">
 		<div class="header-limiter">
-			<h1><a href="#">Company<span>logo</span></a></h1>
+			<h1><a href="#">Task<span>Manager</span></a></h1>
 			<nav>
 				<a href="tasks.html">Home</a>
 				<a href="profile.html">Profile</a>
@@ -23,7 +23,6 @@
 	</header>
 
 	<div class="container">
-
 		<button type="button" id="mine" class="btn btn-default" aria-label="Left Align">Mine</button>
         <button type="button" id="all"  class="btn btn-default" aria-label="Center Align">All</button>
 		<table  class="task-table table table-bordered table-hover">
@@ -35,14 +34,13 @@
 		    </tr>
 		    </thead>
 		    <tbody id="tasks-body">
-		    
-
 		    </tbody>
 		</table>
 		<form action="newtask.html">
-   		 <input type="submit" value="Create new task">
-</form>
+   			<input type="submit" value="Create new task">
+		</form>
 	</div>
+	
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 	<script>
 	function leaveComment() {
@@ -56,18 +54,12 @@
              contentType: "application/json",
              statusCode: {
 	        	    200: function(data) {
-	        	    	console.log(data);
-	        	    	showComment(data);
 	        	      },
 	        	   	403: function() {
 	        	   		alert("error with script");
 	        	   	}
         	}
-             
         });
-		
-		
-		
 	}
 	
 	$(function () {
@@ -79,7 +71,6 @@
             dataType: 'json',
             statusCode: {
 	        	    200: function(data) {
-	        	    	console.log(data);
 	        	    	if (!data.username){
 	        	    		window.location = "/TaskManager/index.html";
 	        	    	}
@@ -87,7 +78,7 @@
 	        	   	403: function() {
 	        	   		alert("error with script");
 	        	   	}
-       	}
+       		}
 		});
 	});
 	
@@ -112,7 +103,7 @@
 	        	   	403: function() {
 	        	   		alert("error with script");
 	        	   	}
-        	}
+        		}
 		});
 	});
 
@@ -169,8 +160,6 @@
 			         .text("CLOSED"));
 			taskStatus.append(taskStatusSelect);
 			taskStatusSelect.find('option:contains('+obj.status+')').attr("selected",true);
-			console.log(obj.status);
-			console.log(taskStatus.val())
 		}
 		
 		else{
@@ -187,7 +176,6 @@
 	}
 	
 	function ChangeStatus(id,select) {
-		console.log(132435);
 		$.ajax({
             url: '/TaskManager/task',
             type: 'POST',
@@ -201,14 +189,9 @@
 	        	   	403: function() {
 	        	   		alert("error with script");
 	        	   	}
-       	}
+       		}
 		});
 	}
-	
 	</script>
-
-
-	
-	
 </body>
 </html>

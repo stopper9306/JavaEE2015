@@ -53,3 +53,9 @@ table#users {
 	max-width: 50%;
 	margin-top: 150px;
 }
+.hidden {
+	display: none;
+}
+.red {
+	color: #FF0000;
+}
